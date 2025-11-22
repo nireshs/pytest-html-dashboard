@@ -15,13 +15,133 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- Additional chart types (bar charts, line graphs, trend analysis)
-- Test history tracking across multiple runs
-- Comparison reports between test runs
+- Additional chart types (bar charts, line graphs)
 - PDF export functionality
-- Real-time test execution dashboard
-- Integration with test management tools (TestRail, Xray, etc.)
 - Custom reporter themes marketplace
+- Integration with test management tools (TestRail, Xray, etc.)
+
+## [1.2.0] - 2025-11-22
+
+### 🚀 Major New Features
+
+#### 📊 Historical Trend Analysis
+- **Test History Tracking**: SQLite database for storing test results over time
+- **Flaky Test Detection**: Automatic identification of unstable tests
+- **Trend Visualization**: Charts showing pass rate trends across runs
+- **Statistics Dashboard**: Overall metrics, most failed tests, slowest tests
+- **Data Retention**: Configurable retention period (default: 90 days)
+- **Test History API**: Query individual test performance over time
+
+Configuration:
+```yaml
+historical:
+  enable_tracking: true
+  database_path: "test-history.db"
+  show_trends: true
+  flaky_detection: true
+  retention_days: 90
+```
+
+#### ⚡ Real-Time Dashboard
+- **Live Test Execution**: Watch tests execute in real-time
+- **Auto-Updating Charts**: Charts refresh automatically as tests complete
+- **Progress Indicators**: Visual feedback for running tests
+- **WebSocket Support**: Fast, efficient updates with fallback to polling
+- **Current Test Display**: See which test is currently executing
+- **Session Status**: Connection indicator showing live/offline status
+
+Configuration:
+```yaml
+realtime:
+  enable_realtime: false  # Enable for live updates
+  websocket_port: 8888
+  poll_interval: 2  # seconds
+```
+
+#### 🤖 AI-Powered Error Analysis
+- **Pattern Matching**: 10+ common error patterns with solutions
+- **Smart Suggestions**: Context-aware remediation steps
+- **Documentation Links**: Automatic links to relevant docs
+- **Search Integration**: One-click search on Stack Overflow, GitHub, Google
+- **Error Categorization**: Severity levels (critical/high/medium/low)
+- **Solution Caching**: Fast repeated lookups
+- **AI Provider Support**: Ready for OpenAI/Anthropic API integration
+
+Supported Error Patterns:
+- Assertion Failures
+- Timeout Errors
+- Connection Errors
+- Import Errors
+- Attribute Errors
+- Key Errors
+- File Not Found
+- Type Conversion Errors
+- Selenium Exceptions
+- Permission Errors
+
+Configuration:
+```yaml
+ai:
+  enable_ai_analysis: true
+  provider: "local"  # local, openai, anthropic
+  pattern_matching: true
+```
+
+### ✨ Enhanced Features
+
+#### New Modules
+- `history.py` - Historical data storage and retrieval (450+ lines)
+- `realtime.py` - Real-time updates with WebSocket support (400+ lines)
+- `ai_analyzer.py` - AI error analysis engine (500+ lines)
+
+#### Configuration Improvements
+- New configuration sections: `historical`, `realtime`, `ai`
+- Enhanced `ReporterConfig` with new feature flags
+- Python 3.13 compatibility added
+
+### 🔧 Technical Details
+
+#### Database Schema
+- `test_runs`: Aggregate run statistics
+- `test_results`: Individual test outcomes
+- `flaky_tests`: Flaky test tracking with flip counts
+- Optimized indexes for fast queries
+
+#### Real-Time Architecture
+- WebSocket server for live connections
+- HTTP polling fallback for compatibility
+- JSON state file for persistence
+- Background thread for non-blocking operation
+
+#### AI Analysis Engine
+- Regex-based pattern matching
+- Error classification system
+- Suggestion generation
+- Documentation lookup
+- Search query generation
+- HTML report generation for rich display
+
+### 📈 Statistics & Insights
+
+New analytics capabilities:
+- Average pass rate across all runs
+- Most frequently failing tests
+- Slowest tests (by average duration)
+- Flaky test identification with confidence scores
+- Trend analysis for test stability
+
+### 🎨 UI Enhancements
+- AI analysis sections in error popups
+- Real-time status indicators
+- Live test execution display
+- Trend charts (when historical data available)
+- Enhanced error detail views
+
+### 📚 Documentation
+- Updated README with v1.2.0 features
+- New configuration examples
+- API documentation for new modules
+- Integration guides for new features
 
 ## [1.1.0] - 2025-11-22
 

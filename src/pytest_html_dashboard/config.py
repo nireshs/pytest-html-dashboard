@@ -47,6 +47,33 @@ class ChartConfig:
 
 
 @dataclass
+class HistoricalConfig:
+    """Historical tracking configuration."""
+    enable_tracking: bool = True
+    database_path: str = "test-history.db"
+    show_trends: bool = True
+    flaky_detection: bool = True
+    retention_days: int = 90
+
+
+@dataclass
+class RealtimeConfig:
+    """Real-time dashboard configuration."""
+    enable_realtime: bool = False
+    websocket_port: int = 8888
+    poll_interval: int = 2  # seconds
+
+
+@dataclass
+class AIConfig:
+    """AI-powered error analysis configuration."""
+    enable_ai_analysis: bool = True
+    provider: str = "local"  # local, openai, anthropic
+    api_key: Optional[str] = None
+    pattern_matching: bool = True
+
+
+@dataclass
 class ReportConfig:
     """Report behavior configuration."""
     enable_enhanced_reporting: bool = True
@@ -66,6 +93,9 @@ class ReporterConfig:
     branding: BrandingConfig = field(default_factory=BrandingConfig)
     charts: ChartConfig = field(default_factory=ChartConfig)
     report: ReportConfig = field(default_factory=ReportConfig)
+    historical: HistoricalConfig = field(default_factory=HistoricalConfig)
+    realtime: RealtimeConfig = field(default_factory=RealtimeConfig)
+    ai: AIConfig = field(default_factory=AIConfig)
     custom_css: Optional[str] = None
     custom_js: Optional[str] = None
 
@@ -75,11 +105,17 @@ class ReporterConfig:
         branding_dict = config_dict.get('branding', {})
         charts_dict = config_dict.get('charts', {})
         report_dict = config_dict.get('report', {})
+        historical_dict = config_dict.get('historical', {})
+        realtime_dict = config_dict.get('realtime', {})
+        ai_dict = config_dict.get('ai', {})
 
         return cls(
             branding=BrandingConfig(**branding_dict),
             charts=ChartConfig(**charts_dict),
             report=ReportConfig(**report_dict),
+            historical=HistoricalConfig(**historical_dict),
+            realtime=RealtimeConfig(**realtime_dict),
+            ai=AIConfig(**ai_dict),
             custom_css=config_dict.get('custom_css'),
             custom_js=config_dict.get('custom_js'),
         )

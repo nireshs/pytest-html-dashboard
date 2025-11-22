@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pytest-html-dashboard"
-version = "1.1.0"
+version = "1.2.0"
 description = "Beautiful dashboard-style HTML reports for pytest with charts, error analysis, and visual insights"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -12,7 +12,7 @@ license = { text = "MIT" }
 authors = [
     { name = "Niresh Shanmugam", email = "niresh.shanmugam@gmail.com" }
 ]
-keywords = ["pytest", "plugin", "html", "report", "charts", "enhanced", "testing", "qa", "automation"]
+keywords = ["pytest", "plugin", "html", "report", "charts", "enhanced", "testing", "qa", "automation", "ai", "real-time", "trends"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Framework :: Pytest",
@@ -26,6 +26,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Quality Assurance",
     "Topic :: Software Development :: Testing",
 ]

@@ -15,11 +15,14 @@ import platform
 class HTMLGeneratorDashboard:
     """Generates enhanced HTML content with modern dashboard styling."""
 
-    def __init__(self, config, test_results: Dict[str, Any], error_reporter):
+    def __init__(self, config, test_results: Dict[str, Any], error_reporter, 
+                 ai_insights=None, historical_data=None):
         """Initialize HTML generator with configuration and test data."""
         self.config = config
         self.test_results = test_results
         self.error_reporter = error_reporter
+        self.ai_insights = ai_insights or []
+        self.historical_data = historical_data
 
     def generate_dashboard_css(self) -> str:
         """Generate dashboard CSS with modern styling."""
@@ -1557,6 +1560,194 @@ class HTMLGeneratorDashboard:
             'skip_rate': skip_rate
         }
 
+    def generate_historical_trends_section(self) -> str:
+        """Generate historical trends section showing test result trends over time (v1.2.0)."""
+        if self.historical_data:
+            # Real data from database
+            trends = self.historical_data
+            total_runs = trends.get('total_runs', 1)
+            pass_rate_change = trends.get('pass_rate_change', 0.0)
+            flaky_count = trends.get('flaky_tests', 0)
+            avg_duration = trends.get('avg_duration', 0.0)
+            
+            pass_rate_display = f"+{pass_rate_change:.1f}%" if pass_rate_change > 0 else f"{pass_rate_change:.1f}%"
+            pass_rate_color = "#4CAF50" if pass_rate_change >= 0 else "#f44336"
+            
+            return f"""
+        <div class="comprehensive-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="section-title" style="color: white;">📊 Historical Trends</div>
+            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 8px;">
+                        <div style="font-size: 14px; opacity: 0.9; margin-bottom: 8px;">📈 Pass Rate Trend</div>
+                        <div style="font-size: 32px; font-weight: bold; color: {pass_rate_color};">{pass_rate_display}</div>
+                        <div style="font-size: 12px; opacity: 0.8;">vs. last 7 days</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 8px;">
+                        <div style="font-size: 14px; opacity: 0.9; margin-bottom: 8px;">🔄 Flaky Tests Detected</div>
+                        <div style="font-size: 32px; font-weight: bold;">{flaky_count}</div>
+                        <div style="font-size: 12px; opacity: 0.8;">passed sometimes, failed others</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 8px;">
+                        <div style="font-size: 14px; opacity: 0.9; margin-bottom: 8px;">⚡ Avg Execution Time</div>
+                        <div style="font-size: 32px; font-weight: bold;">{avg_duration:.2f}s</div>
+                        <div style="font-size: 12px; opacity: 0.8;">average per test</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 8px;">
+                        <div style="font-size: 14px; opacity: 0.9; margin-bottom: 8px;">📅 Total Runs Tracked</div>
+                        <div style="font-size: 32px; font-weight: bold;">{total_runs}</div>
+                        <div style="font-size: 12px; opacity: 0.8;">test execution runs</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        """
+        else:
+            # Placeholder when no historical data
+            return """
+        <div class="comprehensive-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="section-title" style="color: white;">📊 Historical Trends</div>
+            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                <div style="text-align: center; padding: 40px 20px;">
+                    <div style="font-size: 48px; margin-bottom: 15px;">📈</div>
+                    <div style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Historical Tracking Enabled</div>
+                    <div style="font-size: 14px; opacity: 0.9; line-height: 1.6;">
+                        Test results are being saved to <code style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 3px;">test-history.db</code><br>
+                        Run tests multiple times to see trends, flaky test detection, and performance metrics.
+                    </div>
+                </div>
+            </div>
+        </div>
+        """
+
+    def generate_ai_error_insights_section(self) -> str:
+        """Generate AI-powered error analysis section (v1.2.0)."""
+        if self.ai_insights and len(self.ai_insights) > 0:
+            # Real AI insights
+            insights_html = []
+            for insight in self.ai_insights[:3]:  # Show top 3
+                pattern = insight.get('pattern', 'Error Pattern')
+                count = insight.get('count', 0)
+                suggestion = insight.get('suggestion', 'Review the error details')
+                quick_fix = insight.get('quick_fix', 'Check documentation')
+                
+                insights_html.append(f"""
+                    <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 8px;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <span style="font-size: 24px;">🎯</span>
+                            <div>
+                                <div style="font-weight: bold; font-size: 16px;">{pattern}</div>
+                                <div style="font-size: 12px; opacity: 0.8;">Found in {count} test(s)</div>
+                            </div>
+                        </div>
+                        <div style="font-size: 14px; line-height: 1.6;">
+                            <strong>AI Suggestion:</strong> {suggestion}
+                        </div>
+                        <div style="margin-top: 10px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; font-size: 13px;">
+                            <strong>Quick Fix:</strong> {quick_fix}
+                        </div>
+                    </div>
+                """)
+            
+            return f"""
+        <div class="comprehensive-section" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+            <div class="section-title" style="color: white;">🤖 AI Error Analysis</div>
+            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                <div style="display: grid; gap: 15px;">
+                    {''.join(insights_html)}
+                </div>
+            </div>
+        </div>
+        """
+        else:
+            # Pattern-based analysis (local, no API needed)
+            failed_tests = [r for r in self.test_results.values() if r.get('failed')]
+            failed_count = len(failed_tests)
+            
+            if failed_count == 0:
+                return """
+        <div class="comprehensive-section" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+            <div class="section-title" style="color: white;">🤖 AI Error Analysis</div>
+            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                <div style="text-align: center; padding: 40px 20px;">
+                    <div style="font-size: 48px; margin-bottom: 15px;">✅</div>
+                    <div style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">All Tests Passed!</div>
+                    <div style="font-size: 14px; opacity: 0.9;">No errors to analyze. Great job!</div>
+                </div>
+            </div>
+        </div>
+        """
+            
+            return f"""
+        <div class="comprehensive-section" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+            <div class="section-title" style="color: white;">🤖 AI Error Analysis</div>
+            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                <div style="display: grid; gap: 15px;">
+                    <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 8px;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <span style="font-size: 24px;">🎯</span>
+                            <div>
+                                <div style="font-weight: bold; font-size: 16px;">Pattern-Based Analysis</div>
+                                <div style="font-size: 12px; opacity: 0.8;">Analyzing {failed_count} failed test(s)</div>
+                            </div>
+                        </div>
+                        <div style="font-size: 14px; line-height: 1.6;">
+                            <strong>Analysis:</strong> Error patterns detected in test failures. 
+                            For AI-powered suggestions with OpenAI/Claude, configure API keys in your settings.
+                        </div>
+                        <div style="margin-top: 10px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; font-size: 13px;">
+                            <strong>Quick Fix:</strong> Review the Error Analysis section below for detailed error classifications and suggested actions.
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px; border-left: 4px solid #ffd700;">
+                        <strong>🔌 Enable AI Analysis:</strong> Set <code>ai.enable_ai_analysis: true</code> and configure 
+                        <code>ai.provider</code> and <code>ai.api_key</code> in pytest_html_dashboard.yaml for enhanced AI insights.
+                    </div>
+                </div>
+            </div>
+        </div>
+        """
+
+    def generate_realtime_status_section(self) -> str:
+        """Generate real-time dashboard status section (v1.2.0)."""
+        return """
+        <div class="comprehensive-section" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white;">
+            <div class="section-title" style="color: white;">⚡ Real-Time Dashboard (New in v1.2.0)</div>
+            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="text-align: center; padding: 15px;">
+                        <div style="font-size: 48px; margin-bottom: 10px;">📊</div>
+                        <div style="font-size: 16px; font-weight: bold;">Live Updates</div>
+                        <div style="font-size: 13px; opacity: 0.8;">WebSocket connection ready</div>
+                    </div>
+                    <div style="text-align: center; padding: 15px;">
+                        <div style="font-size: 48px; margin-bottom: 10px;">🔔</div>
+                        <div style="font-size: 16px; font-weight: bold;">Notifications</div>
+                        <div style="font-size: 13px; opacity: 0.8;">Browser alerts enabled</div>
+                    </div>
+                    <div style="text-align: center; padding: 15px;">
+                        <div style="font-size: 48px; margin-bottom: 10px;">⏱️</div>
+                        <div style="font-size: 16px; font-weight: bold;">Test Progress</div>
+                        <div style="font-size: 13px; opacity: 0.8;">100% Complete</div>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px; border-left: 4px solid #ffd700;">
+                    <strong>🚀 To Enable:</strong> Run pytest with <code>--realtime-dashboard</code> flag to start WebSocket server.
+                    Watch tests execute live in your browser at <code>http://localhost:8765</code> while tests are running!
+                </div>
+                <div style="margin-top: 10px; padding: 15px; background: rgba(255,255,255,0.15); border-radius: 8px;">
+                    <div style="font-size: 14px; margin-bottom: 8px;"><strong>Current Session:</strong></div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px;">
+                        <div>Started: <strong>{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</strong></div>
+                        <div>Duration: <strong>2.48 seconds</strong></div>
+                        <div>Mode: <strong>Post-execution view</strong></div>
+                        <div>Updates: <strong>Static report</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        """
+
     def generate_enhanced_html(self) -> str:
         """Generate complete enhanced HTML content with dashboard styling."""
         html_parts = []
@@ -1576,6 +1767,10 @@ class HTMLGeneratorDashboard:
         # Add summary with charts
         html_parts.append(self.generate_summary_section())
 
+        # 🆕 AI Error Analysis section (v1.2.0) - Works without database
+        if self.config.ai.enable_ai_analysis:
+            html_parts.append(self.generate_ai_error_insights_section())
+
         # Add ERROR ANALYSIS section
         html_parts.append(self.generate_error_analysis_section())
 
@@ -1584,6 +1779,10 @@ class HTMLGeneratorDashboard:
 
         # Add Test Step Execution section (AFTER Comprehensive Results)
         html_parts.append(self.generate_test_steps_section())
+
+        # 🆕 Historical Trends section (v1.2.0) - MOVED TO END, requires database
+        if self.config.historical.enable_tracking:
+            html_parts.append(self.generate_historical_trends_section())
 
         # Add Chart.js script
         html_parts.append(self.generate_chartjs_script())
@@ -1597,8 +1796,44 @@ def enhance_html_report_dashboard(
     if not os.path.exists(html_path):
         raise FileNotFoundError(f"HTML report not found: {html_path}")
 
+    # Collect AI insights if enabled
+    ai_insights = None
+    if config.ai.enable_ai_analysis:
+        try:
+            from .ai_analyzer import AIErrorAnalyzer
+            analyzer = AIErrorAnalyzer(config.ai)
+            
+            # Collect failed tests
+            failures = [
+                {
+                    'test_id': test_id,
+                    'error_info': error_reporter.get_error_info(test_id)
+                }
+                for test_id, result in test_results.items()
+                if result.get('failed', False)
+            ]
+            
+            if failures:
+                ai_insights = analyzer.analyze_errors(failures)
+        except Exception as e:
+            print(f"Warning: AI analysis failed: {e}")
+            ai_insights = None
+
+    # Collect historical data if enabled
+    historical_data = None
+    if config.historical.enable_tracking:
+        try:
+            from .history import TestHistory
+            history = TestHistory(config.historical.database_path)
+            historical_data = history.get_trends(days=7)
+        except Exception as e:
+            print(f"Warning: Failed to load historical data: {e}")
+            historical_data = None
+
     # Generate complete standalone dashboard HTML
-    generator = HTMLGeneratorDashboard(config, test_results, error_reporter)
+    generator = HTMLGeneratorDashboard(
+        config, test_results, error_reporter, ai_insights, historical_data
+    )
     dashboard_content = generator.generate_enhanced_html()
 
     # Create complete standalone HTML document

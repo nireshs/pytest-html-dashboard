@@ -8,13 +8,15 @@ Pytest hooks for dashboard-style HTML reports
 import pytest
 import os
 import time
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from .config import ReporterConfig
 from .error_reporting import ErrorClassifier, EnhancedErrorReporter
 from .html_generator import enhance_html_report_dashboard
+from .history import TestHistory
 
 # Global state for collecting test results
 _test_results = {}
+_history_tracker: Optional[TestHistory] = None
 
 
 def pytest_addoption(parser):
@@ -116,9 +118,21 @@ def pytest_configure(config):
     config._dashboard_config = reporter_config
     config._dashboard_error_reporter = EnhancedErrorReporter()
 
+    # Initialize history tracker if enabled
+    global _history_tracker
+    if reporter_config.historical.enable_tracking:
+        try:
+            _history_tracker = TestHistory(
+                db_path=reporter_config.historical.database_path
+            )
+            config._dashboard_history_tracker = _history_tracker
+        except Exception as e:
+            print(f"Warning: Failed to initialize history tracker: {e}")
+            _history_tracker = None
+
     # Add metadata for pytest-html integration
     if hasattr(config, '_metadata'):
-        config._metadata['Dashboard'] = 'pytest-html-dashboard v1.1.0'
+        config._metadata['Dashboard'] = 'pytest-html-dashboard v1.2.0'
 
 
 def pytest_html_report_title(report):
@@ -131,6 +145,7 @@ def pytest_html_report_title(report):
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     """Capture test results and error information."""
+    global _history_tracker
     outcome = yield
     report = outcome.get_result()
 
@@ -149,6 +164,18 @@ def pytest_runtest_makereport(item, call):
                 'passed': report.passed,
                 'skipped': report.skipped,
             }
+
+            # Save to history database if enabled
+            if _history_tracker:
+                try:
+                    _history_tracker.save_test_result({
+                        'test_id': test_id,
+                        'outcome': report.outcome,
+                        'duration': getattr(report, 'duration', 0.0),
+                        'timestamp': time.time(),
+                    })
+                except Exception as e:
+                    pass  # Don't fail tests if history tracking fails
 
         if report.failed and call.excinfo:
             # Capture error information
