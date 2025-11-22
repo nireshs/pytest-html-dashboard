@@ -1,0 +1,101 @@
+# pytest-dashboard Configuration Example
+# This file demonstrates all available configuration options
+
+# Branding Configuration
+# Customize the appearance and branding of your test dashboard
+branding:
+  # Your company or project name (appears in report header)
+  company_name: "My Awesome Company"
+
+  # Custom report title
+  report_title: "Automated Test Execution Report"
+
+  # Logo URL (can be a Base64 encoded data URL or external URL)
+  # To use a Base64 encoded logo: "data:image/png;base64,iVBORw0KGgo..."
+  # To use an external URL: "https://example.com/logo.png"
+  logo_url: null
+
+  # Color scheme (hex color codes)
+  primary_color: "#1E88E5"      # Main theme color
+  secondary_color: "#42A5F5"    # Secondary theme color
+  success_color: "#66BB6A"      # Color for passed tests
+  failure_color: "#EF5350"      # Color for failed tests
+  warning_color: "#FFA726"      # Color for skipped/warning tests
+
+# Chart Configuration
+# Control the appearance and behavior of charts in reports
+charts:
+  # Enable or disable all charts
+  enable_charts: true
+
+  # Height of charts in pixels
+  chart_height: 350
+
+  # Show pass rate donut chart
+  show_pass_rate_chart: true
+
+  # Show test status distribution chart
+  show_status_distribution_chart: true
+
+  # Enable chart animations
+  chart_animation: true
+
+# Report Configuration
+# Control report features and behavior
+report:
+  # Enable enhanced reporting features
+  enable_enhanced_reporting: true
+
+  # Enable intelligent error classification
+  enable_error_classification: true
+
+  # Show comprehensive test results table
+  enable_comprehensive_table: true
+
+  # Enable detailed test step reporting
+  enable_test_steps: true
+
+  # Maximum length for error messages in the table (characters)
+  max_error_message_length: 120
+
+  # Show test start and end timestamps
+  show_timestamps: true
+
+  # Show test duration
+  show_duration: true
+
+  # Auto-refresh report (useful for live test execution monitoring)
+  auto_refresh: false
+
+  # Auto-refresh interval in seconds (only if auto_refresh is true)
+  refresh_interval: 30
+
+# Custom CSS (optional)
+# Add custom CSS to further customize your reports
+custom_css: |
+  /* Custom styling example */
+  .report-header {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .comprehensive-table tbody tr:hover {
+    background-color: #E3F2FD;
+    transform: scale(1.01);
+  }
+
+# Custom JavaScript (optional)
+# Add custom JavaScript for additional functionality
+custom_js: |
+  // Custom JavaScript example
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('Enhanced report loaded successfully!');
+
+    // Add custom functionality here
+    // Example: Track clicks on test rows
+    document.querySelectorAll('.test-row').forEach(function(row) {
+      row.addEventListener('click', function() {
+        console.log('Test row clicked:', this.textContent);
+      });
+    });
+  });
