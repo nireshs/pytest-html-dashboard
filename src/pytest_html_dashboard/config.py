@@ -15,7 +15,7 @@ from dataclasses import dataclass, field, asdict
 class BrandingConfig:
     """Branding configuration for report customization."""
     company_name: str = "Test Automation Framework"
-    report_title: str = "Enhanced Test Execution Report"
+    report_title: str = "PYTEST HTML DASHBOARD - Test Execution & Analsis Report"
     logo_url: Optional[str] = None  # Base64 encoded logo or URL
     primary_color: str = "#004488"
     secondary_color: str = "#0066CC"
@@ -95,7 +95,8 @@ class ReporterConfig:
                 config_dict = yaml.safe_load(f) or {}
             return cls.from_dict(config_dict)
         except Exception as e:
-            print(f"Warning: Failed to load configuration from {yaml_path}: {e}")
+            print(
+                f"Warning: Failed to load configuration from {yaml_path}: {e}")
             return cls()  # Return default configuration
 
     @classmethod
@@ -106,34 +107,40 @@ class ReporterConfig:
         # Extract branding options
         branding = {}
         if hasattr(pytest_config, 'option'):
-            branding['company_name'] = getattr(pytest_config.option, 'dashboard_company_name',
-                                              "Test Automation Framework")
-            branding['report_title'] = getattr(pytest_config.option, 'dashboard_report_title',
-                                              "Test Execution Dashboard")
-            branding['logo_url'] = getattr(pytest_config.option, 'dashboard_logo_url', None)
-            branding['primary_color'] = getattr(pytest_config.option, 'dashboard_primary_color',
-                                               "#004488")
-            branding['secondary_color'] = getattr(pytest_config.option, 'dashboard_secondary_color',
-                                                 "#0066CC")
+            branding['company_name'] = getattr(
+                pytest_config.option,
+                'dashboard_company_name',
+                "Test Automation Framework")
+            branding['report_title'] = getattr(
+                pytest_config.option,
+                'dashboard_report_title',
+                "Test Execution Dashboard")
+            branding['logo_url'] = getattr(
+                pytest_config.option, 'dashboard_logo_url', None)
+            branding['primary_color'] = getattr(
+                pytest_config.option, 'dashboard_primary_color', "#004488")
+            branding['secondary_color'] = getattr(
+                pytest_config.option, 'dashboard_secondary_color', "#0066CC")
 
         # Extract chart options
         charts = {}
         if hasattr(pytest_config, 'option'):
-            charts['enable_charts'] = getattr(pytest_config.option, 'dashboard_charts', True)
-            charts['show_pass_rate_chart'] = getattr(pytest_config.option,
-                                                     'dashboard_pass_rate_chart', True)
-            charts['show_status_distribution_chart'] = getattr(pytest_config.option,
-                                                               'dashboard_status_chart', True)
+            charts['enable_charts'] = getattr(
+                pytest_config.option, 'dashboard_charts', True)
+            charts['show_pass_rate_chart'] = getattr(
+                pytest_config.option, 'dashboard_pass_rate_chart', True)
+            charts['show_status_distribution_chart'] = getattr(
+                pytest_config.option, 'dashboard_status_chart', True)
 
         # Extract report options
         report = {}
         if hasattr(pytest_config, 'option'):
-            report['enable_enhanced_reporting'] = getattr(pytest_config.option,
-                                                         'dashboard_reporting', True)
-            report['enable_error_classification'] = getattr(pytest_config.option,
-                                                           'dashboard_error_classification', True)
-            report['enable_comprehensive_table'] = getattr(pytest_config.option,
-                                                          'dashboard_comprehensive_table', True)
+            report['enable_enhanced_reporting'] = getattr(
+                pytest_config.option, 'dashboard_reporting', True)
+            report['enable_error_classification'] = getattr(
+                pytest_config.option, 'dashboard_error_classification', True)
+            report['enable_comprehensive_table'] = getattr(
+                pytest_config.option, 'dashboard_comprehensive_table', True)
 
         config_dict['branding'] = branding
         config_dict['charts'] = charts
@@ -149,7 +156,11 @@ class ReporterConfig:
         """Save configuration to YAML file."""
         try:
             with open(output_path, 'w', encoding='utf-8') as f:
-                yaml.dump(self.to_dict(), f, default_flow_style=False, sort_keys=False)
+                yaml.dump(
+                    self.to_dict(),
+                    f,
+                    default_flow_style=False,
+                    sort_keys=False)
             print(f"Configuration saved to {output_path}")
         except Exception as e:
             print(f"Error saving configuration to {output_path}: {e}")

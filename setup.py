@@ -12,7 +12,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="pytest-html-dashboard",
-    version="1.0.0",
+    version="1.1.0",
     author="Niresh Shanmugam",
     author_email="niresh.shanmugam@gmail.com",
     description="Beautiful dashboard-style HTML reports for pytest with charts, error analysis, and visual insights",

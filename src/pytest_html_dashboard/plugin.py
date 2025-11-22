@@ -6,9 +6,15 @@ Pytest hooks for dashboard-style HTML reports
 """
 
 import pytest
+import os
+import time
 from typing import Dict, Any
 from .config import ReporterConfig
 from .error_reporting import ErrorClassifier, EnhancedErrorReporter
+from .html_generator import enhance_html_report_dashboard
+
+# Global state for collecting test results
+_test_results = {}
 
 
 def pytest_addoption(parser):
@@ -55,6 +61,19 @@ def pytest_addoption(parser):
 
     # Report options
     group.addoption(
+        "--dashboard-reporting",
+        action="store_true",
+        dest="dashboard_reporting",
+        default=True,
+        help="Enable enhanced dashboard reporting"
+    )
+    group.addoption(
+        "--no-dashboard-reporting",
+        action="store_false",
+        dest="dashboard_reporting",
+        help="Disable enhanced dashboard reporting"
+    )
+    group.addoption(
         "--dashboard-error-classification",
         action="store_true",
         dest="dashboard_error_classification",
@@ -76,13 +95,30 @@ def pytest_configure(config):
     config_file = config.getoption("dashboard_config")
     reporter_config = ReporterConfig.from_yaml(config_file)
 
+    # Override with command-line options if provided
+    if config.getoption(
+            "dashboard_company_name") != "Test Automation Framework":
+        reporter_config.branding.company_name = config.getoption(
+            "dashboard_company_name")
+    if config.getoption(
+            "dashboard_report_title") != "Test Execution Dashboard":
+        reporter_config.branding.report_title = config.getoption(
+            "dashboard_report_title")
+    if config.getoption("dashboard_logo_url"):
+        reporter_config.branding.logo_url = config.getoption(
+            "dashboard_logo_url")
+
+    reporter_config.charts.enable_charts = config.getoption("dashboard_charts")
+    reporter_config.report.enable_error_classification = config.getoption(
+        "dashboard_error_classification")
+
     # Store configuration in pytest config for access by other hooks
     config._dashboard_config = reporter_config
     config._dashboard_error_reporter = EnhancedErrorReporter()
 
     # Add metadata for pytest-html integration
     if hasattr(config, '_metadata'):
-        config._metadata['Dashboard'] = 'pytest-dashboard v1.0.0'
+        config._metadata['Dashboard'] = 'pytest-html-dashboard v1.1.0'
 
 
 def pytest_html_report_title(report):
@@ -101,10 +137,23 @@ def pytest_runtest_makereport(item, call):
     if hasattr(item.config, '_dashboard_error_reporter'):
         error_reporter = item.config._dashboard_error_reporter
 
+        # Store test result globally for HTML generation
+        test_id = item.nodeid
+
+        if call.when == "call":
+            _test_results[test_id] = {
+                'nodeid': test_id,
+                'outcome': report.outcome,
+                'duration': getattr(report, 'duration', 0.0),
+                'failed': report.failed,
+                'passed': report.passed,
+                'skipped': report.skipped,
+            }
+
         if report.failed and call.excinfo:
             # Capture error information
             error_info = error_reporter.capture_test_error(
-                test_id=item.nodeid,
+                test_id=test_id,
                 log_content=str(call.excinfo.getrepr()),
                 exception=call.excinfo.value
             )
@@ -147,6 +196,45 @@ def pytest_html_results_summary(prefix, summary, postfix):
     ])
 
 
+def pytest_terminal_summary(terminalreporter, exitstatus, config):
+    """
+    Post-process HTML report after ALL pytest operations complete.
+    This runs after pytest-html finishes writing, ensuring we don't get overwritten.
+    """
+    # Get HTML file path from pytest-html
+    html_path = getattr(config.option, 'htmlpath', None)
+
+    if html_path and os.path.exists(html_path):
+        # Give pytest-html time to finish writing the file
+        time.sleep(0.5)
+
+        try:
+            # Get configuration and error reporter
+            reporter_config = getattr(config, '_dashboard_config', None)
+            error_reporter = getattr(config, '_dashboard_error_reporter', None)
+
+            if reporter_config and reporter_config.report.enable_enhanced_reporting:
+                # Enhance the HTML report with dashboard features
+                enhance_html_report_dashboard(
+                    html_path=html_path,
+                    config=reporter_config,
+                    test_results=_test_results,
+                    error_reporter=error_reporter
+                )
+                print(
+                    f"\n[SUCCESS] Enhanced dashboard report generated: {html_path}")
+            else:
+                print(
+                    f"\n[WARNING] Enhanced reporting disabled. Basic report generated: {html_path}")
+
+        except Exception as e:
+            print(f"\n[WARNING] Could not enhance HTML report: {e}")
+            import traceback
+            traceback.print_exc()
+    elif html_path:
+        print(f"\n[WARNING] HTML report file not found at: {html_path}")
+
+
 __all__ = [
     'pytest_addoption',
     'pytest_configure',
@@ -155,4 +243,5 @@ __all__ = [
     'pytest_html_results_table_header',
     'pytest_html_results_table_row',
     'pytest_html_results_summary',
+    'pytest_terminal_summary',
 ]

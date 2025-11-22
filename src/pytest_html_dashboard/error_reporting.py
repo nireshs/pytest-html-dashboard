@@ -29,7 +29,8 @@ class ErrorDetails:
 class ErrorClassifier:
     """Classify errors into categories for better analysis and resolution."""
 
-    # Error pattern definitions (generic patterns applicable to any test framework)
+    # Error pattern definitions (generic patterns applicable to any test
+    # framework)
     ERROR_PATTERNS = {
         'ASSERTION_FAILURE': [
             r'.*AssertionError.*',
@@ -122,8 +123,7 @@ class ErrorClassifier:
         'ATTRIBUTE_ERROR': 'Check object attributes, verify class definitions, review API usage',
         'KEY_ERROR': 'Verify dictionary keys, check data structure, validate JSON/dict access',
         'INDEX_ERROR': 'Check list bounds, verify array access, validate index values',
-        'UNKNOWN': 'Review error message and stack trace, check logs for additional context'
-    }
+        'UNKNOWN': 'Review error message and stack trace, check logs for additional context'}
 
     @classmethod
     def classify_error(cls, error_message: str, stack_trace: str = "") -> str:
@@ -140,7 +140,8 @@ class ErrorClassifier:
     @classmethod
     def get_suggested_action(cls, category: str) -> str:
         """Get suggested action for error category."""
-        return cls.SUGGESTED_ACTIONS.get(category, cls.SUGGESTED_ACTIONS['UNKNOWN'])
+        return cls.SUGGESTED_ACTIONS.get(
+            category, cls.SUGGESTED_ACTIONS['UNKNOWN'])
 
 
 class ErrorExtractor:
@@ -159,11 +160,21 @@ class ErrorExtractor:
 
         # Extract different types of errors
         error_types = [
-            "RuntimeError", "AssertionError", "TimeoutException", "TimeoutError",
-            "ValueError", "TypeError", "AttributeError", "KeyError", "IndexError",
-            "ImportError", "ModuleNotFoundError", "FileNotFoundError",
-            "ConnectionError", "NetworkError", "PermissionError"
-        ]
+            "RuntimeError",
+            "AssertionError",
+            "TimeoutException",
+            "TimeoutError",
+            "ValueError",
+            "TypeError",
+            "AttributeError",
+            "KeyError",
+            "IndexError",
+            "ImportError",
+            "ModuleNotFoundError",
+            "FileNotFoundError",
+            "ConnectionError",
+            "NetworkError",
+            "PermissionError"]
 
         for err_type in error_types:
             if f"{err_type}:" in log_content:
@@ -171,7 +182,8 @@ class ErrorExtractor:
                 error_start = log_content.find(f"{err_type}:")
                 if error_start != -1:
                     error_line = log_content[error_start:].split('\n')[0]
-                    error_message = error_line.replace(f"{err_type}: ", "").strip()
+                    error_message = error_line.replace(
+                        f"{err_type}: ", "").strip()
                 break
 
         # Fallback: Generic error extraction
@@ -190,13 +202,15 @@ class ErrorExtractor:
                 traceback_end = log_content.find("\n\n", traceback_start)
                 if traceback_end == -1:
                     traceback_end = len(log_content)
-                stack_trace = log_content[traceback_start:traceback_end].strip()
+                stack_trace = log_content[traceback_start:traceback_end].strip(
+                )
 
         if not error_message:
             error_message = "Test execution failed"
 
         # Classify error
-        error_category = ErrorClassifier.classify_error(error_message, stack_trace)
+        error_category = ErrorClassifier.classify_error(
+            error_message, stack_trace)
         suggested_action = ErrorClassifier.get_suggested_action(error_category)
 
         return ErrorDetails(
@@ -217,7 +231,8 @@ class ErrorExtractor:
         stack_trace = traceback.format_exc()
 
         # Classify error
-        error_category = ErrorClassifier.classify_error(error_message, stack_trace)
+        error_category = ErrorClassifier.classify_error(
+            error_message, stack_trace)
         suggested_action = ErrorClassifier.get_suggested_action(error_category)
 
         return ErrorDetails(
@@ -235,12 +250,13 @@ class ErrorReportFormatter:
     """Format error information for different reporting formats."""
 
     @staticmethod
-    def format_for_html(error_details: ErrorDetails, max_length: int = 100) -> Dict[str, str]:
+    def format_for_html(error_details: ErrorDetails,
+                        max_length: int = 100) -> Dict[str, str]:
         """Format error details for HTML display."""
         # Truncate error message for table display
         short_message = error_details.error_message
         if len(short_message) > max_length:
-            short_message = short_message[:max_length-3] + "..."
+            short_message = short_message[:max_length - 3] + "..."
 
         # Create detailed popup content
         stack_trace_html = ""
@@ -248,7 +264,8 @@ class ErrorReportFormatter:
             # Limit stack trace length for HTML display
             stack_trace_display = error_details.stack_trace
             if len(stack_trace_display) > 1000:
-                stack_trace_display = stack_trace_display[:1000] + "\n... (truncated)"
+                stack_trace_display = stack_trace_display[:1000] + \
+                    "\n... (truncated)"
             stack_trace_html = f'''<div class="stack-trace">
                 <h5>Stack Trace:</h5>
                 <pre>{stack_trace_display}</pre>
@@ -272,14 +289,16 @@ class ErrorReportFormatter:
         return {
             'short_message': short_message,
             'detailed_content': detailed_content,
-            'category_icon': ErrorReportFormatter._get_category_icon(error_details.error_category),
-            'severity_class': ErrorReportFormatter._get_severity_class(error_details.error_category)
-        }
+            'category_icon': ErrorReportFormatter._get_category_icon(
+                error_details.error_category),
+            'severity_class': ErrorReportFormatter._get_severity_class(
+                error_details.error_category)}
 
     @staticmethod
     def format_for_console(error_details: ErrorDetails) -> str:
         """Format error details for console display."""
-        icon = ErrorReportFormatter._get_category_icon(error_details.error_category)
+        icon = ErrorReportFormatter._get_category_icon(
+            error_details.error_category)
 
         formatted = f"""
 {icon} ERROR DETAILS:
@@ -321,7 +340,10 @@ class ErrorReportFormatter:
     def _get_severity_class(category: str) -> str:
         """Get CSS class for error severity."""
         high_severity = ['CONNECTION_ERROR', 'NETWORK_ERROR', 'TIMEOUT_ERROR']
-        medium_severity = ['ASSERTION_FAILURE', 'CONFIGURATION_ERROR', 'IMPORT_ERROR']
+        medium_severity = [
+            'ASSERTION_FAILURE',
+            'CONFIGURATION_ERROR',
+            'IMPORT_ERROR']
 
         if category in high_severity:
             return 'error-high-severity'
@@ -338,8 +360,11 @@ class EnhancedErrorReporter:
         self.error_storage: Dict[str, List[ErrorDetails]] = {}
         self.error_statistics: Dict[str, int] = {}
 
-    def capture_test_error(self, test_id: str, log_content: str = "",
-                          exception: Optional[Exception] = None) -> Optional[ErrorDetails]:
+    def capture_test_error(
+            self,
+            test_id: str,
+            log_content: str = "",
+            exception: Optional[Exception] = None) -> Optional[ErrorDetails]:
         """Capture and store detailed error information."""
         error_details = None
 
@@ -357,7 +382,8 @@ class EnhancedErrorReporter:
 
             # Update statistics
             category = error_details.error_category
-            self.error_statistics[category] = self.error_statistics.get(category, 0) + 1
+            self.error_statistics[category] = self.error_statistics.get(
+                category, 0) + 1
 
         return error_details
 
@@ -369,7 +395,10 @@ class EnhancedErrorReporter:
         """Get error category statistics."""
         return self.error_statistics.copy()
 
-    def format_error_for_display(self, test_id: str, format_type: str = "html") -> str:
+    def format_error_for_display(
+            self,
+            test_id: str,
+            format_type: str = "html") -> str:
         """Format error information for display."""
         errors = self.get_test_errors(test_id)
         if not errors:
@@ -405,9 +434,13 @@ class EnhancedErrorReporter:
 
         total_errors = sum(self.error_statistics.values())
         for category, count in sorted(self.error_statistics.items()):
-            percentage = (count / total_errors * 100) if total_errors > 0 else 0
+            percentage = (
+                count /
+                total_errors *
+                100) if total_errors > 0 else 0
             icon = ErrorReportFormatter._get_category_icon(category)
-            html += f"<tr><td>{icon} {category}</td><td>{count}</td><td>{percentage:.1f}%</td></tr>"
+            html += f"<tr><td>{icon} {category}</td><td>{count}</td><td>{
+                percentage:.1f}%</td></tr>"
 
         html += """
                     </tbody>
@@ -424,15 +457,21 @@ enhanced_error_reporter = EnhancedErrorReporter()
 
 
 # Convenience functions for integration
-def capture_test_error(test_id: str, log_content: str = "",
-                      exception: Optional[Exception] = None) -> Optional[ErrorDetails]:
+def capture_test_error(
+        test_id: str,
+        log_content: str = "",
+        exception: Optional[Exception] = None) -> Optional[ErrorDetails]:
     """Capture test error using global reporter."""
-    return enhanced_error_reporter.capture_test_error(test_id, log_content, exception=exception)
+    return enhanced_error_reporter.capture_test_error(
+        test_id, log_content, exception=exception)
 
 
-def get_formatted_error_details(test_id: str, format_type: str = "html") -> str:
+def get_formatted_error_details(
+        test_id: str,
+        format_type: str = "html") -> str:
     """Get formatted error details for a test."""
-    return enhanced_error_reporter.format_error_for_display(test_id, format_type)
+    return enhanced_error_reporter.format_error_for_display(
+        test_id, format_type)
 
 
 def generate_error_analysis_html() -> str:

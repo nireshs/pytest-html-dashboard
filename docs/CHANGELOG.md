@@ -23,6 +23,78 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Integration with test management tools (TestRail, Xray, etc.)
 - Custom reporter themes marketplace
 
+## [1.1.0] - 2025-11-22
+
+### Added
+- ✨ **Complete HTML Enhancement System** with modern dashboard-style reports
+- 📊 **Chart.js Integration** for interactive visualizations:
+  - Test status distribution donut chart
+  - Pass rate analysis bar chart
+  - Error categories breakdown chart (shows when tests fail)
+  - Responsive chart sizing and animations
+- 🎨 **Modern CSS Styling** featuring:
+  - Gradient headers with customizable brand colors
+  - Responsive summary cards with hover effects
+  - Professional table layouts with sticky headers
+  - Mobile-responsive design (automatic breakpoints)
+  - Custom scrollbars for improved UX
+  - Print-friendly styles
+- 📋 **Comprehensive Test Results Table** including:
+  - Test case names with full node IDs
+  - Color-coded status badges (passed/failed/skipped)
+  - Duration tracking with monospace formatting
+  - Error category classification badges
+  - Truncated error messages with full-text tooltips
+  - Inline suggested remediation actions with 💡 icons
+- 🔍 **Enhanced Error Reporting Integration**:
+  - Visual error category badges
+  - Inline suggested actions for all failures
+  - Color-coded error messages with backgrounds
+  - Error categories breakdown visualization
+- ⚙️ **New Configuration Options**:
+  - `chart_height` - Customize chart display height
+  - `chart_animation` - Toggle chart animations on/off
+  - `max_error_message_length` - Control error message truncation
+  - `enable_comprehensive_table` - Show/hide detailed results table
+- 🚀 **Automatic Report Enhancement**:
+  - New `pytest_sessionfinish` hook for post-processing
+  - Seamless integration with pytest-html workflow
+  - Automatic HTML injection before `</body>` tag
+  - Error handling with graceful degradation
+
+### Improved
+- Enhanced `plugin.py` with global test result collection
+- Better error handling with detailed user feedback messages
+- Command-line option integration and override system
+- Configuration loading from multiple sources (YAML > CLI > defaults)
+- Plugin version metadata display (v1.1.0)
+
+### Fixed
+- Error reporter method compatibility - now uses `get_test_errors()` (returns list)
+- HTML insertion point detection for various HTML structures
+- Test result tracking during execution phase
+- Duration capture for all test outcomes
+
+### Technical Details
+- New module: `html_generator.py` (800+ lines of code)
+- `HTMLGenerator` class with modular generation methods:
+  - `generate_custom_css()` - Theme-aware styling
+  - `generate_chartjs_script()` - Dynamic Chart.js initialization
+  - `generate_dashboard_header()` - Branded header with logo
+  - `generate_summary_cards()` - Statistics cards layout
+  - `generate_charts_section()` - Multiple chart types
+  - `generate_comprehensive_test_table()` - Detailed results
+- Chart.js 4.4.0 via CDN integration
+- CSS variables for theme customization
+- Proper HTML escaping and sanitization
+- Standalone report generation capability
+
+### Documentation
+- Updated README with v1.1.0 feature highlights
+- Enhanced examples in `examples/` directory
+- Improved configuration documentation
+- Added Chart.js and CSS customization guides
+
 ## [1.0.0] - 2025-11-22
 
 ### Added
