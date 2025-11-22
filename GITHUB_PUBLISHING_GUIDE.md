@@ -1,7 +1,7 @@
-# Publishing pytest-dashboard to GitHub - Complete Guide
+# Publishing pytest-html-dashboard to GitHub - Complete Guide
 
 ## Prerequisites
-✅ pytest-dashboard folder is completely independent - no external dependencies
+✅ pytest-html-dashboard folder is completely independent - no external dependencies
 ✅ All code is generic and ready for public release
 ✅ MIT License included
 ✅ Comprehensive documentation ready
@@ -13,18 +13,18 @@
 1. **Log in** to your other GitHub account at https://github.com
 2. Click **"+" → "New repository"**
 3. Configure:
-   - **Name**: `pytest-dashboard`
+   - **Name**: `pytest-html-dashboard`
    - **Description**: `Beautiful dashboard-style HTML reports for pytest with charts, error analysis, and visual insights`
    - **Public** repository (recommended for open source)
    - **DO NOT** check any initialization options
 4. Click **"Create repository"**
-5. **Copy the repository URL** (e.g., `https://github.com/your-username/pytest-dashboard.git`)
+5. **Copy the repository URL** (e.g., `https://github.com/your-username/pytest-html-dashboard.git`)
 
 ### 2. Initialize Git Repository (PowerShell)
 
 ```powershell
-# Navigate to pytest-dashboard folder
-cd c:\SN\Repos\company\project-framework\pytest-dashboard
+# Navigate to pytest-html-dashboard folder
+cd c:\SN\Repos\company\project-framework\pytest-html-dashboard
 
 # Initialize new Git repository
 git init
@@ -37,7 +37,7 @@ git config user.email "your.email@example.com"
 git add .
 
 # Create initial commit
-git commit -m "Initial commit: pytest-dashboard v1.0.0
+git commit -m "Initial commit: pytest-html-dashboard v1.0.0
 
 - Beautiful dashboard-style HTML reports for pytest
 - Interactive Chart.js visualizations
@@ -69,7 +69,7 @@ git commit -m "Update GitHub URLs and author information"
 
 ```powershell
 # Add remote repository (replace with your actual URL)
-git remote add origin https://github.com/your-username/pytest-dashboard.git
+git remote add origin https://github.com/your-username/pytest-html-dashboard.git
 
 # Verify remote
 git remote -v
@@ -107,12 +107,12 @@ Click gear icon next to "About" → Add:
 
 1. Go to **Releases** → **"Create a new release"**
 2. **Tag version**: `v1.0.0`
-3. **Release title**: `pytest-dashboard v1.0.0 - Initial Release`
+3. **Release title**: `pytest-html-dashboard v1.0.0 - Initial Release`
 4. **Description**:
 ```markdown
 ## 🎉 Initial Release
 
-pytest-dashboard brings beautiful dashboard-style reporting to pytest with:
+pytest-html-dashboard brings beautiful dashboard-style reporting to pytest with:
 
 ### Features
 - 📊 **Interactive Charts** - Chart.js visualizations for test results
@@ -124,7 +124,7 @@ pytest-dashboard brings beautiful dashboard-style reporting to pytest with:
 
 ### Installation
 ```bash
-pip install pytest-dashboard
+pip install pytest-html-dashboard
 ```
 
 ### Quick Start
@@ -236,10 +236,10 @@ After publishing:
 
 Your published repository will have:
 ```
-pytest-dashboard/
+pytest-html-dashboard/
 ├── .github/              # GitHub Actions (optional)
 ├── src/
-│   └── pytest_dashboard/
+│   └── pytest_html_dashboard/
 │       ├── __init__.py
 │       ├── config.py
 │       ├── error_reporting.py

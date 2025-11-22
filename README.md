@@ -1,7 +1,7 @@
-# pytest-dashboard
+# pytest-html-dashboard
 
-[![PyPI version](https://badge.fury.io/py/pytest-dashboard.svg)](https://badge.fury.io/py/pytest-dashboard)
-[![Python versions](https://img.shields.io/pypi/pyversions/pytest-dashboard.svg)](https://pypi.org/project/pytest-dashboard/)
+[![PyPI version](https://badge.fury.io/py/pytest-html-dashboard.svg)](https://badge.fury.io/py/pytest-html-dashboard)
+[![Python versions](https://img.shields.io/pypi/pyversions/pytest-html-dashboard.svg)](https://pypi.org/project/pytest-html-dashboard/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A comprehensive pytest plugin that enhances HTML reports with:
@@ -52,7 +52,7 @@ Each error category includes:
 ## Installation
 
 ```bash
-pip install pytest-dashboard
+pip install pytest-html-dashboard
 ```
 
 ## Quick Start
@@ -69,7 +69,7 @@ The plugin automatically enhances the HTML report with all features enabled.
 
 ### Custom Configuration
 
-Create a `pytest_dashboard.yaml` configuration file:
+Create a `pytest_html_dashboard.yaml` configuration file:
 
 ```yaml
 branding:
@@ -110,7 +110,7 @@ pytest --html=report.html \
 
 ```python
 # conftest.py
-from pytest_dashboard import ReporterConfig, BrandingConfig
+from pytest_html_dashboard import ReporterConfig, BrandingConfig
 
 def pytest_configure(config):
     # Customize branding
@@ -250,9 +250,9 @@ Check the `examples/` directory for complete working examples:
 
 ## Comparison with pytest-html
 
-pytest-dashboard is built as an enhancement layer on top of pytest-html, adding:
+pytest-html-dashboard is built as an enhancement layer on top of pytest-html, adding:
 
-| Feature | pytest-html | pytest-dashboard |
+| Feature | pytest-html | pytest-html-dashboard |
 |---------|-------------|------------------|
 | Basic HTML reports | ✅ | ✅ |
 | Interactive charts | ❌ | ✅ |
@@ -269,8 +269,8 @@ pytest-dashboard is built as an enhancement layer on top of pytest-html, adding:
 
 ```bash
 # Clone the repository
-git clone https://github.com/nireshs/pytest-dashboard.git
-cd pytest-dashboard
+git clone https://github.com/nireshs/pytest-html-dashboard.git
+cd pytest-html-dashboard
 
 # Create virtual environment
 python -m venv .venv
@@ -290,7 +290,7 @@ pytest tests/
 pytest
 
 # Run with coverage
-pytest --cov=pytest_dashboard --cov-report=html
+pytest --cov=pytest_html_dashboard --cov-report=html
 
 # Run specific test file
 pytest tests/test_plugin.py
@@ -343,8 +343,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support
 
 - 📧 Email: niresh.shanmugam@gmail.com
-- 🐛 Issues: [GitHub Issues](https://github.com/nireshs/pytest-dashboard/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/nireshs/pytest-dashboard/discussions)
+- 🐛 Issues: [GitHub Issues](https://github.com/nireshs/pytest-html-dashboard/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/nireshs/pytest-html-dashboard/discussions)
 
 ## Roadmap
 
@@ -358,4 +358,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-Made with ❤️ by the pytest-dashboard team
+Made with ❤️ by the pytest-html-dashboard team

@@ -1,4 +1,4 @@
-﻿# Update GitHub Information Script
+# Update GitHub Information Script
 param(
     [Parameter(Mandatory=$true)]
     [string]$GitHubUsername,

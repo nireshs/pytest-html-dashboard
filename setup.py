@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-pytest-dashboard
+pytest-html-dashboard
 A comprehensive pytest plugin for beautiful dashboard-style HTML reports with charts, error analysis, and visual insights.
 """
 
@@ -11,18 +11,18 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="pytest-dashboard",
+    name="pytest-html-dashboard",
     version="1.0.0",
     author="Niresh Shanmugam",
     author_email="niresh.shanmugam@gmail.com",
     description="Beautiful dashboard-style HTML reports for pytest with charts, error analysis, and visual insights",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/nireshs/pytest-dashboard",
+    url="https://github.com/nireshs/pytest-html-dashboard",
     project_urls={
-        "Bug Tracker": "https://github.com/nireshs/pytest-dashboard/issues",
-        "Documentation": "https://github.com/nireshs/pytest-dashboard#readme",
-        "Source Code": "https://github.com/nireshs/pytest-dashboard",
+        "Bug Tracker": "https://github.com/nireshs/pytest-html-dashboard/issues",
+        "Documentation": "https://github.com/nireshs/pytest-html-dashboard#readme",
+        "Source Code": "https://github.com/nireshs/pytest-html-dashboard",
     },
     package_dir={"": "src"},
     packages=find_packages(where="src"),
@@ -61,7 +61,7 @@ setup(
     },
     entry_points={
         "pytest11": [
-            "dashboard = pytest_dashboard.plugin",
+            "dashboard = pytest_html_dashboard.plugin",
         ],
     },
     include_package_data=True,

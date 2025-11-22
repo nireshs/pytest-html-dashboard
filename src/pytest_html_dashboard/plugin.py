@@ -14,7 +14,7 @@ from .error_reporting import ErrorClassifier, EnhancedErrorReporter
 def pytest_addoption(parser):
     """Add command-line options for pytest-dashboard."""
     group = parser.getgroup("dashboard", "Dashboard HTML Report")
-    
+
     # Branding options
     group.addoption(
         "--dashboard-company-name",
@@ -37,7 +37,7 @@ def pytest_addoption(parser):
         default=None,
         help="Logo URL or base64 encoded image"
     )
-    
+
     # Chart options
     group.addoption(
         "--dashboard-charts",
@@ -52,7 +52,7 @@ def pytest_addoption(parser):
         dest="dashboard_charts",
         help="Disable chart visualizations"
     )
-    
+
     # Report options
     group.addoption(
         "--dashboard-error-classification",
@@ -75,11 +75,11 @@ def pytest_configure(config):
     # Load configuration
     config_file = config.getoption("dashboard_config")
     reporter_config = ReporterConfig.from_yaml(config_file)
-    
+
     # Store configuration in pytest config for access by other hooks
     config._dashboard_config = reporter_config
     config._dashboard_error_reporter = EnhancedErrorReporter()
-    
+
     # Add metadata for pytest-html integration
     if hasattr(config, '_metadata'):
         config._metadata['Dashboard'] = 'pytest-dashboard v1.0.0'
@@ -97,10 +97,10 @@ def pytest_runtest_makereport(item, call):
     """Capture test results and error information."""
     outcome = yield
     report = outcome.get_result()
-    
+
     if hasattr(item.config, '_dashboard_error_reporter'):
         error_reporter = item.config._dashboard_error_reporter
-        
+
         if report.failed and call.excinfo:
             # Capture error information
             error_info = error_reporter.capture_test_error(
@@ -108,7 +108,7 @@ def pytest_runtest_makereport(item, call):
                 log_content=str(call.excinfo.getrepr()),
                 exception=call.excinfo.value
             )
-            
+
             # Attach error classification to report
             if error_info:
                 report.dashboard_error_category = error_info.error_category
@@ -129,7 +129,7 @@ def pytest_html_results_table_row(report, cells):
         cells.insert(2, f'<td>{report.dashboard_error_category}</td>')
     else:
         cells.insert(2, '<td>N/A</td>')
-    
+
     # Add error type
     if hasattr(report, 'dashboard_error_type'):
         cells.insert(3, f'<td>{report.dashboard_error_type}</td>')

@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 # Changelog
 
-All notable changes to pytest-dashboard will be documented in this file.
+All notable changes to pytest-html-dashboard will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2025-11-22
 
 ### Added
-- Initial release of pytest-dashboard
+- Initial release of pytest-html-dashboard
 - Interactive Chart.js visualizations for test results
   - Pass/Fail distribution donut chart
   - Overall pass rate chart with percentages
@@ -104,7 +104,7 @@ If you're currently using pytest-html without enhancements:
 # Before
 pytest --html=report.html --self-contained-html
 
-# After (with pytest-dashboard installed)
+# After (with pytest-html-dashboard installed)
 # Same command - enhancements are automatic!
 pytest --html=report.html --self-contained-html
 ```
@@ -115,7 +115,7 @@ No changes needed! The plugin automatically enhances your reports while maintain
 
 To customize the dashboard:
 
-1. Create `pytest_dashboard.yaml`:
+1. Create `pytest_html_dashboard.yaml`:
 ```yaml
 branding:
   company_name: "Your Company"
@@ -130,16 +130,16 @@ pytest --html=report.html --self-contained-html
 ## Support and Contributing
 
 - 📧 Email: niresh.shanmugam@gmail.com
-- 🐛 Issues: https://github.com/nireshs/pytest-dashboard/issues
-- 💬 Discussions: https://github.com/nireshs/pytest-dashboard/discussions
+- 🐛 Issues: https://github.com/nireshs/pytest-html-dashboard/issues
+- 💬 Discussions: https://github.com/nireshs/pytest-html-dashboard/discussions
 - 🤝 Contributing: See CONTRIBUTING.md
 
 ## Links
 
-- [GitHub Repository](https://github.com/nireshs/pytest-dashboard)
-- [PyPI Package](https://pypi.org/project/pytest-dashboard/)
-- [Documentation](https://pytest-dashboard.readthedocs.io/)
-- [Issue Tracker](https://github.com/nireshs/pytest-dashboard/issues)
+- [GitHub Repository](https://github.com/nireshs/pytest-html-dashboard)
+- [PyPI Package](https://pypi.org/project/pytest-html-dashboard/)
+- [Documentation](https://pytest-html-dashboard.readthedocs.io/)
+- [Issue Tracker](https://github.com/nireshs/pytest-html-dashboard/issues)
 
 ---
 
