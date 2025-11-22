@@ -64,6 +64,7 @@ Thumbs.db
 
 # Project specific
 logs/
-# Allow sample report
+# Allow sample report and documentation images
 !reports/
 !reports/complete_dashboard_report.html
+!docs/images/
