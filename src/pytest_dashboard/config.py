@@ -133,7 +133,9 @@ class ReporterConfig:
             report['enable_error_classification'] = getattr(pytest_config.option,
                                                            'dashboard_error_classification', True)
             report['enable_comprehensive_table'] = getattr(pytest_config.option,
-                                                          'dashboard_comprehensive_table', True)        config_dict['branding'] = branding
+                                                          'dashboard_comprehensive_table', True)
+
+        config_dict['branding'] = branding
         config_dict['charts'] = charts
         config_dict['report'] = report
 
@@ -168,7 +170,9 @@ def create_default_config_file(output_path: str = "pytest_dashboard.yaml"):
 
 # Branding Configuration
 # Customize the look and feel of your dashboard
-""" + content        with open(output_path, 'w', encoding='utf-8') as f:
+""" + content
+
+        with open(output_path, 'w', encoding='utf-8') as f:
             f.write(commented_content)
 
         print(f"Default configuration file created: {output_path}")
