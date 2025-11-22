@@ -1,7 +1,5 @@
 include README.md
 include LICENSE
-include CHANGELOG.md
-recursive-include src/pytest_dashboard *.py
-recursive-include examples *.py *.yaml
+recursive-include src/pytest_html_dashboard *.py
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
