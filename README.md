@@ -21,14 +21,17 @@ A comprehensive pytest plugin that enhances HTML reports with interactive charts
 
 ## 📸 Sample Report
 
-**[View Sample Report](reports/complete_dashboard_report.html)** (Download and open in browser)
+**[🔗 View Live Sample Report](https://htmlpreview.github.io/?https://github.com/nireshs/pytest-html-dashboard/blob/main/reports/complete_dashboard_report.html)** ← Click to see it in action!
+
+Or download and open locally: [complete_dashboard_report.html](reports/complete_dashboard_report.html)
 
 The enhanced report includes:
-- **Test Status Distribution** - Visual breakdown of passed/failed/skipped tests
-- **Pass Rate Charts** - Overall test success metrics
-- **Error Analysis** - Categorized failures with remediation suggestions
-- **Comprehensive Test Table** - Filterable, sortable results with error details
-- **Step Execution Summary** - Detailed test step information
+- **📊 Test Status Distribution** - Visual breakdown of passed/failed/skipped tests with interactive charts
+- **📈 Pass Rate Charts** - Overall test success metrics with data labels
+- **🔍 Error Analysis** - Categorized failures with remediation suggestions
+- **📋 Comprehensive Test Table** - Filterable, sortable results with expandable error details
+- **⚡ Step Execution Summary** - Detailed test step information with status tracking
+- **🎨 Modern UI** - Beautiful purple gradient design with hover effects
 
 ## 🚀 Quick Start
 
