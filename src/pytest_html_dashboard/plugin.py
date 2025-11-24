@@ -90,6 +90,58 @@ def pytest_addoption(parser):
         help="Path to dashboard configuration YAML file"
     )
 
+    # v1.2.0 Feature options
+    group.addoption(
+        "--enable-history",
+        action="store_true",
+        dest="enable_history",
+        default=None,
+        help="Enable historical test tracking (v1.2.0)"
+    )
+    group.addoption(
+        "--disable-history",
+        action="store_true",
+        dest="disable_history",
+        default=False,
+        help="Disable historical test tracking"
+    )
+    group.addoption(
+        "--history-db",
+        action="store",
+        dest="history_db",
+        default=None,
+        help="Path to history database file (default: test-history.db)"
+    )
+    group.addoption(
+        "--realtime-dashboard",
+        action="store_true",
+        dest="realtime_dashboard",
+        default=False,
+        help="Enable real-time WebSocket dashboard (v1.2.0)"
+    )
+    group.addoption(
+        "--realtime-port",
+        action="store",
+        dest="realtime_port",
+        type=int,
+        default=8888,
+        help="WebSocket server port for real-time dashboard (default: 8888)"
+    )
+    group.addoption(
+        "--ai-provider",
+        action="store",
+        dest="ai_provider",
+        default=None,
+        help="AI provider: 'local', 'openai', or 'anthropic' (v1.2.0)"
+    )
+    group.addoption(
+        "--ai-api-key",
+        action="store",
+        dest="ai_api_key",
+        default=None,
+        help="API key for AI-powered error analysis (v1.2.0)"
+    )
+
 
 def pytest_configure(config):
     """Configure pytest-dashboard plugin."""
@@ -114,6 +166,25 @@ def pytest_configure(config):
     reporter_config.report.enable_error_classification = config.getoption(
         "dashboard_error_classification")
 
+    # Override v1.2.0 feature options from CLI
+    if config.getoption("enable_history"):
+        reporter_config.historical.enable_tracking = True
+    elif config.getoption("disable_history"):
+        reporter_config.historical.enable_tracking = False
+    
+    if config.getoption("history_db"):
+        reporter_config.historical.database_path = config.getoption("history_db")
+    
+    if config.getoption("realtime_dashboard"):
+        reporter_config.realtime.enable_realtime = True
+        reporter_config.realtime.websocket_port = config.getoption("realtime_port")
+    
+    if config.getoption("ai_provider"):
+        reporter_config.ai.provider = config.getoption("ai_provider")
+    
+    if config.getoption("ai_api_key"):
+        reporter_config.ai.api_key = config.getoption("ai_api_key")
+
     # Store configuration in pytest config for access by other hooks
     config._dashboard_config = reporter_config
     config._dashboard_error_reporter = EnhancedErrorReporter()
@@ -129,6 +200,20 @@ def pytest_configure(config):
         except Exception as e:
             print(f"Warning: Failed to initialize history tracker: {e}")
             _history_tracker = None
+
+    # Initialize real-time dashboard if enabled
+    if reporter_config.realtime.enable_realtime:
+        try:
+            from .realtime import RealtimeDashboard
+            realtime_server = RealtimeDashboard(
+                port=reporter_config.realtime.websocket_port
+            )
+            realtime_server.start()
+            config._dashboard_realtime = realtime_server
+            print(f"[Real-time Dashboard] WebSocket server started on port {reporter_config.realtime.websocket_port}")
+        except Exception as e:
+            print(f"Warning: Failed to start real-time server: {e}")
+            config._dashboard_realtime = None
 
     # Add metadata for pytest-html integration
     if hasattr(config, '_metadata'):
@@ -151,6 +236,7 @@ def pytest_runtest_makereport(item, call):
 
     if hasattr(item.config, '_dashboard_error_reporter'):
         error_reporter = item.config._dashboard_error_reporter
+        realtime_server = getattr(item.config, '_dashboard_realtime', None)
 
         # Store test result globally for HTML generation
         test_id = item.nodeid
@@ -164,6 +250,17 @@ def pytest_runtest_makereport(item, call):
                 'passed': report.passed,
                 'skipped': report.skipped,
             }
+
+            # Emit real-time event if enabled
+            if realtime_server:
+                try:
+                    realtime_server.emit_test_result({
+                        'test_id': test_id,
+                        'outcome': report.outcome,
+                        'duration': getattr(report, 'duration', 0.0),
+                    })
+                except Exception as e:
+                    pass  # Don't fail tests if real-time emission fails
 
             # Save to history database if enabled
             if _history_tracker:
@@ -221,6 +318,41 @@ def pytest_html_results_summary(prefix, summary, postfix):
         '<p>Enhanced by pytest-dashboard</p>',
         '</div>'
     ])
+
+
+def pytest_sessionstart(session):
+    """Emit session start event for real-time dashboard."""
+    try:
+        realtime_server = getattr(session.config, '_dashboard_realtime', None)
+        if realtime_server:
+            realtime_server.emit_event('session_start', {
+                'timestamp': time.time(),
+                'message': 'Test session started'
+            })
+    except Exception as e:
+        # Don't fail tests if real-time fails
+        pass
+
+
+def pytest_sessionfinish(session, exitstatus):
+    """Cleanup real-time server and emit session finish event."""
+    try:
+        realtime_server = getattr(session.config, '_dashboard_realtime', None)
+        if realtime_server:
+            # Emit finish event
+            realtime_server.emit_event('session_finish', {
+                'timestamp': time.time(),
+                'exitstatus': exitstatus,
+                'message': 'Test session finished'
+            })
+            # Give clients time to receive final events
+            time.sleep(0.5)
+            # Stop server
+            realtime_server.stop()
+            print("\n[Real-time Dashboard] WebSocket server stopped")
+    except Exception as e:
+        # Don't fail tests if cleanup fails
+        pass
 
 
 def pytest_terminal_summary(terminalreporter, exitstatus, config):

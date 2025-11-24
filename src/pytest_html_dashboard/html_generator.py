@@ -15,7 +15,7 @@ import platform
 class HTMLGeneratorDashboard:
     """Generates enhanced HTML content with modern dashboard styling."""
 
-    def __init__(self, config, test_results: Dict[str, Any], error_reporter, 
+    def __init__(self, config, test_results: Dict[str, Any], error_reporter,
                  ai_insights=None, historical_data=None):
         """Initialize HTML generator with configuration and test data."""
         self.config = config
@@ -1569,10 +1569,10 @@ class HTMLGeneratorDashboard:
             pass_rate_change = trends.get('pass_rate_change', 0.0)
             flaky_count = trends.get('flaky_tests', 0)
             avg_duration = trends.get('avg_duration', 0.0)
-            
+
             pass_rate_display = f"+{pass_rate_change:.1f}%" if pass_rate_change > 0 else f"{pass_rate_change:.1f}%"
             pass_rate_color = "#4CAF50" if pass_rate_change >= 0 else "#f44336"
-            
+
             return f"""
         <div class="comprehensive-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
             <div class="section-title" style="color: white;">📊 Historical Trends</div>
@@ -1630,7 +1630,7 @@ class HTMLGeneratorDashboard:
                 count = insight.get('count', 0)
                 suggestion = insight.get('suggestion', 'Review the error details')
                 quick_fix = insight.get('quick_fix', 'Check documentation')
-                
+
                 insights_html.append(f"""
                     <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 8px;">
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
@@ -1648,7 +1648,7 @@ class HTMLGeneratorDashboard:
                         </div>
                     </div>
                 """)
-            
+
             return f"""
         <div class="comprehensive-section" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
             <div class="section-title" style="color: white;">🤖 AI Error Analysis</div>
@@ -1663,7 +1663,7 @@ class HTMLGeneratorDashboard:
             # Pattern-based analysis (local, no API needed)
             failed_tests = [r for r in self.test_results.values() if r.get('failed')]
             failed_count = len(failed_tests)
-            
+
             if failed_count == 0:
                 return """
         <div class="comprehensive-section" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
@@ -1677,7 +1677,7 @@ class HTMLGeneratorDashboard:
             </div>
         </div>
         """
-            
+
             return f"""
         <div class="comprehensive-section" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
             <div class="section-title" style="color: white;">🤖 AI Error Analysis</div>
@@ -1692,7 +1692,7 @@ class HTMLGeneratorDashboard:
                             </div>
                         </div>
                         <div style="font-size: 14px; line-height: 1.6;">
-                            <strong>Analysis:</strong> Error patterns detected in test failures. 
+                            <strong>Analysis:</strong> Error patterns detected in test failures.
                             For AI-powered suggestions with OpenAI/Claude, configure API keys in your settings.
                         </div>
                         <div style="margin-top: 10px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; font-size: 13px;">
@@ -1700,7 +1700,7 @@ class HTMLGeneratorDashboard:
                         </div>
                     </div>
                     <div style="margin-top: 10px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px; border-left: 4px solid #ffd700;">
-                        <strong>🔌 Enable AI Analysis:</strong> Set <code>ai.enable_ai_analysis: true</code> and configure 
+                        <strong>🔌 Enable AI Analysis:</strong> Set <code>ai.enable_ai_analysis: true</code> and configure
                         <code>ai.provider</code> and <code>ai.api_key</code> in pytest_html_dashboard.yaml for enhanced AI insights.
                     </div>
                 </div>
@@ -1802,7 +1802,7 @@ def enhance_html_report_dashboard(
         try:
             from .ai_analyzer import AIErrorAnalyzer
             analyzer = AIErrorAnalyzer(config.ai)
-            
+
             # Collect failed tests
             failures = [
                 {
@@ -1812,7 +1812,7 @@ def enhance_html_report_dashboard(
                 for test_id, result in test_results.items()
                 if result.get('failed', False)
             ]
-            
+
             if failures:
                 ai_insights = analyzer.analyze_errors(failures)
         except Exception as e:

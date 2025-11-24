@@ -340,41 +340,42 @@ class TestHistory:
 
     def get_trends(self, days: int = 7) -> Dict[str, Any]:
         """Get trend data for the dashboard.
-        
+
         Args:
             days: Number of days to analyze
-            
+
         Returns:
             Dictionary with trend metrics
         """
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
-            
+
             # Total runs
             cursor.execute("""
                 SELECT COUNT(*) FROM test_runs
                 WHERE timestamp >= datetime('now', '-' || ? || ' days')
             """, (days,))
             total_runs = cursor.fetchone()[0]
-            
-            # Pass rate change
+
+            # Pass rate change (calculate from passed/total_tests)
             cursor.execute("""
-                SELECT 
-                    AVG(CASE WHEN timestamp >= datetime('now', '-' || ? || ' days') 
-                        THEN pass_rate ELSE NULL END) as recent,
-                    AVG(CASE WHEN timestamp < datetime('now', '-' || ? || ' days') 
-                        THEN pass_rate ELSE NULL END) as old
+                SELECT
+                    AVG(CASE WHEN timestamp >= datetime('now', '-' || ? || ' days')
+                        THEN CAST(passed AS REAL) / NULLIF(total_tests, 0) * 100 ELSE NULL END) as recent,
+                    AVG(CASE WHEN timestamp < datetime('now', '-' || ? || ' days')
+                        THEN CAST(passed AS REAL) / NULLIF(total_tests, 0) * 100 ELSE NULL END) as old
                 FROM test_runs
+                WHERE total_tests > 0
             """, (days, days))
             row = cursor.fetchone()
             recent_rate = row[0] or 0
             old_rate = row[1] or recent_rate
             pass_rate_change = recent_rate - old_rate
-            
+
             # Flaky tests count
             cursor.execute("SELECT COUNT(*) FROM flaky_tests")
             flaky_count = cursor.fetchone()[0]
-            
+
             # Average duration
             cursor.execute("""
                 SELECT AVG(duration) FROM test_results
@@ -384,7 +385,7 @@ class TestHistory:
                 )
             """, (days,))
             avg_duration = cursor.fetchone()[0] or 0.0
-            
+
             return {
                 "total_runs": total_runs,
                 "pass_rate_change": round(pass_rate_change, 2),
