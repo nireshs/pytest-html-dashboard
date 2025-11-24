@@ -1,8 +1,10 @@
 # pytest-html-dashboard
 
-[![PyPI version](https://badge.fury.io/py/pytest-html-dashboard.svg)](https://badge.fury.io/py/pytest-html-dashboard)
+[![PyPI version](https://img.shields.io/pypi/v/pytest-html-dashboard.svg)](https://pypi.org/project/pytest-html-dashboard/)
 [![Python versions](https://img.shields.io/pypi/pyversions/pytest-html-dashboard.svg)](https://pypi.org/project/pytest-html-dashboard/)
+[![Downloads](https://img.shields.io/pypi/dm/pytest-html-dashboard.svg)](https://pypi.org/project/pytest-html-dashboard/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub stars](https://img.shields.io/github/stars/nireshs/pytest-html-dashboard.svg)](https://github.com/nireshs/pytest-html-dashboard/stargazers)
 
 **Transform your pytest HTML reports into beautiful, interactive dashboards!**
 
