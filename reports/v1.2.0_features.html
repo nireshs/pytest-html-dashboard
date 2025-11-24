@@ -666,7 +666,7 @@
                 </div>
                 <div class="info-item">
                     <div class="info-label">Pytest Version:</div>
-                    <div class="info-value">8.3.5</div>
+                    <div class="info-value">9.0.1</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">Platform:</div>
@@ -678,15 +678,15 @@
                 </div>
                 <div class="info-item">
                     <div class="info-label">Test Start Time:</div>
-                    <div class="info-value">2025-11-22 15:56:04</div>
+                    <div class="info-value">2025-11-24 16:12:15</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">Total Duration:</div>
-                    <div class="info-value">0.45 seconds</div>
+                    <div class="info-value">0.44 seconds</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">Report Generated:</div>
-                    <div class="info-value">2025-11-22 15:56:04</div>
+                    <div class="info-value">2025-11-24 16:12:15</div>
                 </div>
             </div>
         </div>
@@ -723,6 +723,35 @@
             </div>
         </div>
     </div>
+        
+
+        <div class="comprehensive-section" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+            <div class="section-title" style="color: white;">🤖 AI Error Analysis</div>
+            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                <div style="display: grid; gap: 15px;">
+                    <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 8px;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <span style="font-size: 24px;">🎯</span>
+                            <div>
+                                <div style="font-weight: bold; font-size: 16px;">Pattern-Based Analysis</div>
+                                <div style="font-size: 12px; opacity: 0.8;">Analyzing 13 failed test(s)</div>
+                            </div>
+                        </div>
+                        <div style="font-size: 14px; line-height: 1.6;">
+                            <strong>Analysis:</strong> Error patterns detected in test failures.
+                            For AI-powered suggestions with OpenAI/Claude, configure API keys in your settings.
+                        </div>
+                        <div style="margin-top: 10px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; font-size: 13px;">
+                            <strong>Quick Fix:</strong> Review the Error Analysis section below for detailed error classifications and suggested actions.
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px; border-left: 4px solid #ffd700;">
+                        <strong>🔌 Enable AI Analysis:</strong> Set <code>ai.enable_ai_analysis: true</code> and configure
+                        <code>ai.provider</code> and <code>ai.api_key</code> in pytest_html_dashboard.yaml for enhanced AI insights.
+                    </div>
+                </div>
+            </div>
+        </div>
         
 
         <div class="comprehensive-section error-analysis-section">
@@ -768,7 +797,9 @@ assert 30 == 25</p>
 assert [1, 2, 3, 4, 6] == [1, 2, 3, 4, 5]
   
   At index 4 diff: [0m[94m6[39;49;00m[90m[39;49;00m != [0m[94m5[39;49;00m[90m[39;49;00m
-  Use -v to get more diff</p>
+  
+  Full diff:
+  [0m[90m [3</p>
                                 <p class="suggested-action"><strong>💡 Suggested Action:</strong> Review error message and stack trace, check logs for additional context</p>
                             </div>
                         </div>
@@ -883,8 +914,8 @@ assert 404 == 200</p>
                                 <p><strong>Message:</strong> API call failed: Not found
 assert 'error' == 'success'
   
-  - success
-  + error</p>
+  [0m[91m- success[39;49;00m[90m[39;49;00m
+  [92m+ error[39;49;00m[90m[39;49;00m</p>
                                 <p class="suggested-action"><strong>💡 Suggested Action:</strong> Review error message and stack trace, check logs for additional context</p>
                             </div>
                         </div>
@@ -899,8 +930,8 @@ assert 'error' == 'success'
                                 <p><strong>Message:</strong> Email was modified
 assert 'wrong@example.com' == 'test@example.com'
   
-  - test@example.com
-  + wrong@example.com</p>
+  [0m[91m- test@example.com[39;49;00m[90m[39;49;00m
+  [92m+ wrong@example.com[39;49;00m[90m[39;49;00m</p>
                                 <p class="suggested-action"><strong>💡 Suggested Action:</strong> Review error message and stack trace, check logs for additional context</p>
                             </div>
                         </div>
@@ -957,8 +988,8 @@ assert 'wrong@example.com' == 'test@example.com'
                 <tr class="test-row-passed">
                     <td class="col-sno">1</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestBasicFeatures::test_simple_pass</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result passed"><span class="result-passed">PASSED</span></td>
                     <td class="col-error-category"><span class="error-category">N/A</span></td>
@@ -970,8 +1001,8 @@ assert 'wrong@example.com' == 'test@example.com'
                 <tr class="test-row-passed">
                     <td class="col-sno">2</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestBasicFeatures::test_math_operations_pass</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result passed"><span class="result-passed">PASSED</span></td>
                     <td class="col-error-category"><span class="error-category">N/A</span></td>
@@ -983,8 +1014,8 @@ assert 'wrong@example.com' == 'test@example.com'
                 <tr class="test-row-passed">
                     <td class="col-sno">3</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestBasicFeatures::test_string_operations_pass</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result passed"><span class="result-passed">PASSED</span></td>
                     <td class="col-error-category"><span class="error-category">N/A</span></td>
@@ -996,8 +1027,8 @@ assert 'wrong@example.com' == 'test@example.com'
                 <tr class="test-row-failed">
                     <td class="col-sno">4</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestFailureScenarios::test_assertion_failure</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.001s</td>
                     <td class="col-result failed"><span class="result-failed">FAILED</span></td>
                     <td class="col-error-category"><span class="error-category">UNKNOWN</span></td>
@@ -1022,9 +1053,9 @@ assert 50 == 100</td></tr>
                 <tr class="test-row-failed">
                     <td class="col-sno">5</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestFailureScenarios::test_comparison_failure</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
-                    <td class="col-duration">0.000s</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
+                    <td class="col-duration">0.001s</td>
                     <td class="col-result failed"><span class="result-failed">FAILED</span></td>
                     <td class="col-error-category"><span class="error-category">UNKNOWN</span></td>
                     <td class="col-result-details">
@@ -1048,9 +1079,9 @@ assert 30 == 25</td></tr>
                 <tr class="test-row-failed">
                     <td class="col-sno">6</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestFailureScenarios::test_list_assertion_failure</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
-                    <td class="col-duration">0.042s</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
+                    <td class="col-duration">0.029s</td>
                     <td class="col-result failed"><span class="result-failed">FAILED</span></td>
                     <td class="col-error-category"><span class="error-category">UNKNOWN</span></td>
                     <td class="col-result-details">
@@ -1064,7 +1095,9 @@ assert 30 == 25</td></tr>
 assert [1, 2, 3, 4, 6] == [1, 2, 3, 4, 5]
   
   At index 4 diff: [0m[94m6[39;49;00m[90m[39;49;00m != [0m[94m5[39;49;00m[90m[39;49;00m
-  Use -v to get more diff</td></tr>
+  
+  Full diff:
+  [0m[90m [3</td></tr>
                                 <tr><td><strong>Suggested Action:</strong></td><td class="suggested-action">Review error message and stack trace, check logs for additional context</td></tr>
                             </table>
                             <div class="stack-trace"><h6>Stack Trace:</h6><pre>NoneType: None
@@ -1077,8 +1110,8 @@ assert [1, 2, 3, 4, 6] == [1, 2, 3, 4, 5]
                 <tr class="test-row-failed">
                     <td class="col-sno">7</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestFailureScenarios::test_type_error_example</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result failed"><span class="result-failed">FAILED</span></td>
                     <td class="col-error-category"><span class="error-category">UNKNOWN</span></td>
@@ -1102,8 +1135,8 @@ assert [1, 2, 3, 4, 6] == [1, 2, 3, 4, 5]
                 <tr class="test-row-failed">
                     <td class="col-sno">8</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestFailureScenarios::test_zero_division_error</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result failed"><span class="result-failed">FAILED</span></td>
                     <td class="col-error-category"><span class="error-category">UNKNOWN</span></td>
@@ -1127,8 +1160,8 @@ assert [1, 2, 3, 4, 6] == [1, 2, 3, 4, 5]
                 <tr class="test-row-failed">
                     <td class="col-sno">9</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestFailureScenarios::test_key_error_example</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result failed"><span class="result-failed">FAILED</span></td>
                     <td class="col-error-category"><span class="error-category">UNKNOWN</span></td>
@@ -1152,8 +1185,8 @@ assert [1, 2, 3, 4, 6] == [1, 2, 3, 4, 5]
                 <tr class="test-row-failed">
                     <td class="col-sno">10</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestFailureScenarios::test_index_error_example</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result failed"><span class="result-failed">FAILED</span></td>
                     <td class="col-error-category"><span class="error-category">INDEX_ERROR</span></td>
@@ -1177,8 +1210,8 @@ assert [1, 2, 3, 4, 6] == [1, 2, 3, 4, 5]
                 <tr class="test-row-failed">
                     <td class="col-sno">11</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestFailureScenarios::test_attribute_error_example</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result failed"><span class="result-failed">FAILED</span></td>
                     <td class="col-error-category"><span class="error-category">ATTRIBUTE_ERROR</span></td>
@@ -1202,8 +1235,8 @@ assert [1, 2, 3, 4, 6] == [1, 2, 3, 4, 5]
                 <tr class="test-row-passed">
                     <td class="col-sno">12</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestWithDurations::test_fast_execution</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result passed"><span class="result-passed">PASSED</span></td>
                     <td class="col-error-category"><span class="error-category">N/A</span></td>
@@ -1215,8 +1248,8 @@ assert [1, 2, 3, 4, 6] == [1, 2, 3, 4, 5]
                 <tr class="test-row-passed">
                     <td class="col-sno">13</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestWithDurations::test_medium_duration</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.101s</td>
                     <td class="col-result passed"><span class="result-passed">PASSED</span></td>
                     <td class="col-error-category"><span class="error-category">N/A</span></td>
@@ -1228,8 +1261,8 @@ assert [1, 2, 3, 4, 6] == [1, 2, 3, 4, 5]
                 <tr class="test-row-passed">
                     <td class="col-sno">14</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestWithDurations::test_slow_execution</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.301s</td>
                     <td class="col-result passed"><span class="result-passed">PASSED</span></td>
                     <td class="col-error-category"><span class="error-category">N/A</span></td>
@@ -1241,8 +1274,8 @@ assert [1, 2, 3, 4, 6] == [1, 2, 3, 4, 5]
                 <tr class="test-row-passed">
                     <td class="col-sno">15</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestComplexScenarios::test_nested_data_structures</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result passed"><span class="result-passed">PASSED</span></td>
                     <td class="col-error-category"><span class="error-category">N/A</span></td>
@@ -1254,8 +1287,8 @@ assert [1, 2, 3, 4, 6] == [1, 2, 3, 4, 5]
                 <tr class="test-row-passed">
                     <td class="col-sno">16</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestComplexScenarios::test_multiple_assertions</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result passed"><span class="result-passed">PASSED</span></td>
                     <td class="col-error-category"><span class="error-category">N/A</span></td>
@@ -1267,8 +1300,8 @@ assert [1, 2, 3, 4, 6] == [1, 2, 3, 4, 5]
                 <tr class="test-row-skipped">
                     <td class="col-sno">17</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestComplexScenarios::test_expected_failure</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result skipped"><span class="result-skipped">SKIPPED</span></td>
                     <td class="col-error-category"><span class="error-category">N/A</span></td>
@@ -1280,8 +1313,8 @@ assert [1, 2, 3, 4, 6] == [1, 2, 3, 4, 5]
                 <tr class="test-row-passed">
                     <td class="col-sno">18</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestComplexScenarios::test_boundary_conditions</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result passed"><span class="result-passed">PASSED</span></td>
                     <td class="col-error-category"><span class="error-category">N/A</span></td>
@@ -1293,8 +1326,8 @@ assert [1, 2, 3, 4, 6] == [1, 2, 3, 4, 5]
                 <tr class="test-row-passed">
                     <td class="col-sno">19</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestDataValidation::test_email_validation_pass</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result passed"><span class="result-passed">PASSED</span></td>
                     <td class="col-error-category"><span class="error-category">N/A</span></td>
@@ -1306,8 +1339,8 @@ assert [1, 2, 3, 4, 6] == [1, 2, 3, 4, 5]
                 <tr class="test-row-failed">
                     <td class="col-sno">20</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestDataValidation::test_email_validation_fail</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result failed"><span class="result-failed">FAILED</span></td>
                     <td class="col-error-category"><span class="error-category">UNKNOWN</span></td>
@@ -1332,8 +1365,8 @@ assert '@' in 'invalid-email'</td></tr>
                 <tr class="test-row-passed">
                     <td class="col-sno">21</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestDataValidation::test_phone_number_validation</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result passed"><span class="result-passed">PASSED</span></td>
                     <td class="col-error-category"><span class="error-category">N/A</span></td>
@@ -1345,8 +1378,8 @@ assert '@' in 'invalid-email'</td></tr>
                 <tr class="test-row-failed">
                     <td class="col-sno">22</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestDataValidation::test_password_strength_fail</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result failed"><span class="result-failed">FAILED</span></td>
                     <td class="col-error-category"><span class="error-category">UNKNOWN</span></td>
@@ -1372,8 +1405,8 @@ assert 4 >= 8
                 <tr class="test-row-passed">
                     <td class="col-sno">23</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestAPISimulation::test_api_status_code_200</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result passed"><span class="result-passed">PASSED</span></td>
                     <td class="col-error-category"><span class="error-category">N/A</span></td>
@@ -1385,8 +1418,8 @@ assert 4 >= 8
                 <tr class="test-row-failed">
                     <td class="col-sno">24</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestAPISimulation::test_api_status_code_404</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result failed"><span class="result-failed">FAILED</span></td>
                     <td class="col-error-category"><span class="error-category">UNKNOWN</span></td>
@@ -1411,8 +1444,8 @@ assert 404 == 200</td></tr>
                 <tr class="test-row-passed">
                     <td class="col-sno">25</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestAPISimulation::test_api_response_structure</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result passed"><span class="result-passed">PASSED</span></td>
                     <td class="col-error-category"><span class="error-category">N/A</span></td>
@@ -1424,8 +1457,8 @@ assert 404 == 200</td></tr>
                 <tr class="test-row-failed">
                     <td class="col-sno">26</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestAPISimulation::test_api_response_validation_fail</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result failed"><span class="result-failed">FAILED</span></td>
                     <td class="col-error-category"><span class="error-category">UNKNOWN</span></td>
@@ -1439,8 +1472,8 @@ assert 404 == 200</td></tr>
                                 <tr><td><strong>Message:</strong></td><td>API call failed: Not found
 assert 'error' == 'success'
   
-  - success
-  + error</td></tr>
+  [0m[91m- success[39;49;00m[90m[39;49;00m
+  [92m+ error[39;49;00m[90m[39;49;00m</td></tr>
                                 <tr><td><strong>Suggested Action:</strong></td><td class="suggested-action">Review error message and stack trace, check logs for additional context</td></tr>
                             </table>
                             <div class="stack-trace"><h6>Stack Trace:</h6><pre>NoneType: None
@@ -1453,8 +1486,8 @@ assert 'error' == 'success'
                 <tr class="test-row-passed">
                     <td class="col-sno">27</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestPerformance::test_algorithm_performance</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.001s</td>
                     <td class="col-result passed"><span class="result-passed">PASSED</span></td>
                     <td class="col-error-category"><span class="error-category">N/A</span></td>
@@ -1466,9 +1499,9 @@ assert 'error' == 'success'
                 <tr class="test-row-passed">
                     <td class="col-sno">28</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestPerformance::test_memory_intensive_operation</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
-                    <td class="col-duration">0.003s</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
+                    <td class="col-duration">0.002s</td>
                     <td class="col-result passed"><span class="result-passed">PASSED</span></td>
                     <td class="col-error-category"><span class="error-category">N/A</span></td>
                     <td class="col-result-details">
@@ -1479,8 +1512,8 @@ assert 'error' == 'success'
                 <tr class="test-row-passed">
                     <td class="col-sno">29</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestWithFixtures::test_user_data_fixture</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result passed"><span class="result-passed">PASSED</span></td>
                     <td class="col-error-category"><span class="error-category">N/A</span></td>
@@ -1492,8 +1525,8 @@ assert 'error' == 'success'
                 <tr class="test-row-passed">
                     <td class="col-sno">30</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestWithFixtures::test_database_config_fixture</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
                     <td class="col-duration">0.000s</td>
                     <td class="col-result passed"><span class="result-passed">PASSED</span></td>
                     <td class="col-error-category"><span class="error-category">N/A</span></td>
@@ -1505,9 +1538,9 @@ assert 'error' == 'success'
                 <tr class="test-row-failed">
                     <td class="col-sno">31</td>
                     <td class="col-name">tests/test_dashboard_features.py::TestWithFixtures::test_fixture_data_modification_fail</td>
-                    <td class="col-start-time">15:56:04</td>
-                    <td class="col-end-time">15:56:04</td>
-                    <td class="col-duration">0.000s</td>
+                    <td class="col-start-time">16:12:15</td>
+                    <td class="col-end-time">16:12:15</td>
+                    <td class="col-duration">0.001s</td>
                     <td class="col-result failed"><span class="result-failed">FAILED</span></td>
                     <td class="col-error-category"><span class="error-category">UNKNOWN</span></td>
                     <td class="col-result-details">
@@ -1520,8 +1553,8 @@ assert 'error' == 'success'
                                 <tr><td><strong>Message:</strong></td><td>Email was modified
 assert 'wrong@example.com' == 'test@example.com'
   
-  - test@example.com
-  + wrong@example.com</td></tr>
+  [0m[91m- test@example.com[39;49;00m[90m[39;49;00m
+  [92m+ wrong@example.com[39;49;00m[90m[39;49;00m</td></tr>
                                 <tr><td><strong>Suggested Action:</strong></td><td class="suggested-action">Review error message and stack trace, check logs for additional context</td></tr>
                             </table>
                             <div class="stack-trace"><h6>Stack Trace:</h6><pre>NoneType: None
@@ -1856,6 +1889,35 @@ assert 'wrong@example.com' == '...</td>
         </div>
         
 
+        <div class="comprehensive-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="section-title" style="color: white;">📊 Historical Trends</div>
+            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 8px;">
+                        <div style="font-size: 14px; opacity: 0.9; margin-bottom: 8px;">📈 Pass Rate Trend</div>
+                        <div style="font-size: 32px; font-weight: bold; color: #4CAF50;">0.0%</div>
+                        <div style="font-size: 12px; opacity: 0.8;">vs. last 7 days</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 8px;">
+                        <div style="font-size: 14px; opacity: 0.9; margin-bottom: 8px;">🔄 Flaky Tests Detected</div>
+                        <div style="font-size: 32px; font-weight: bold;">30</div>
+                        <div style="font-size: 12px; opacity: 0.8;">passed sometimes, failed others</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 8px;">
+                        <div style="font-size: 14px; opacity: 0.9; margin-bottom: 8px;">⚡ Avg Execution Time</div>
+                        <div style="font-size: 32px; font-weight: bold;">0.01s</div>
+                        <div style="font-size: 12px; opacity: 0.8;">average per test</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 8px;">
+                        <div style="font-size: 14px; opacity: 0.9; margin-bottom: 8px;">📅 Total Runs Tracked</div>
+                        <div style="font-size: 32px; font-weight: bold;">2</div>
+                        <div style="font-size: 12px; opacity: 0.8;">test execution runs</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
         <script>
         // Error toggle functionality
         function toggleError(id, event) {
@@ -1906,7 +1968,7 @@ assert 'wrong@example.com' == '...</td>
             for (let i = 0; i < rows.length; i++) {
                 const row = rows[i];
                 if (!row.cells || row.cells.length < 7) continue; // Skip rows without enough cells
-                
+
                 const testName = row.cells[1].textContent.toLowerCase();
                 const status = row.classList.contains('test-row-passed') ? 'passed' :
                               row.classList.contains('test-row-failed') ? 'failed' :
@@ -2000,7 +2062,7 @@ assert 'wrong@example.com' == '...</td>
             for (let i = 0; i < rows.length; i++) {
                 const row = rows[i];
                 if (!row.cells || row.cells.length < 3) continue; // Skip rows without enough cells
-                
+
                 const stepName = row.cells[1].textContent.toLowerCase();
                 const statusBadge = row.cells[2].querySelector('.status-badge');
                 const status = statusBadge ? statusBadge.textContent.toLowerCase() : '';

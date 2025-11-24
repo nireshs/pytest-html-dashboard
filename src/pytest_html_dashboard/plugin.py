@@ -171,17 +171,17 @@ def pytest_configure(config):
         reporter_config.historical.enable_tracking = True
     elif config.getoption("disable_history"):
         reporter_config.historical.enable_tracking = False
-    
+
     if config.getoption("history_db"):
         reporter_config.historical.database_path = config.getoption("history_db")
-    
+
     if config.getoption("realtime_dashboard"):
         reporter_config.realtime.enable_realtime = True
         reporter_config.realtime.websocket_port = config.getoption("realtime_port")
-    
+
     if config.getoption("ai_provider"):
         reporter_config.ai.provider = config.getoption("ai_provider")
-    
+
     if config.getoption("ai_api_key"):
         reporter_config.ai.api_key = config.getoption("ai_api_key")
 
@@ -335,7 +335,53 @@ def pytest_sessionstart(session):
 
 
 def pytest_sessionfinish(session, exitstatus):
-    """Cleanup real-time server and emit session finish event."""
+    """Save historical data, cleanup real-time server and emit session finish event."""
+    global _history_tracker
+
+    # Save test run to history database
+    if _history_tracker and _test_results:
+        try:
+            # Calculate test statistics
+            passed = sum(1 for r in _test_results.values() if r.get('outcome') == 'passed')
+            failed = sum(1 for r in _test_results.values() if r.get('outcome') == 'failed')
+            skipped = sum(1 for r in _test_results.values() if r.get('outcome') == 'skipped')
+            errors = sum(1 for r in _test_results.values() if r.get('outcome') == 'error')
+            total_duration = sum(r.get('duration', 0) for r in _test_results.values())
+
+            # Convert test results dict to list format expected by save_test_run
+            tests_list = []
+            for test_id, result in _test_results.items():
+                tests_list.append({
+                    'name': result.get('nodeid', test_id),
+                    'outcome': result.get('outcome', 'unknown'),
+                    'duration': result.get('duration', 0),
+                    'error_message': result.get('error_message', ''),
+                    'error_type': result.get('error_type', '')
+                })
+
+            # Prepare results dict for save_test_run
+            results = {
+                'summary': {
+                    'total': len(_test_results),
+                    'passed': passed,
+                    'failed': failed,
+                    'skipped': skipped,
+                    'errors': errors,
+                    'duration': total_duration
+                },
+                'tests': tests_list
+            }
+
+            # Save test run
+            run_id = _history_tracker.save_test_run(results)
+            print(f"\n[Historical Tracking] Saved test run #{run_id} with {len(tests_list)} tests to database")
+
+        except Exception as e:
+            print(f"\nWarning: Failed to save historical data: {e}")
+            import traceback
+            traceback.print_exc()
+
+    # Cleanup real-time server
     try:
         realtime_server = getattr(session.config, '_dashboard_realtime', None)
         if realtime_server:
@@ -349,7 +395,7 @@ def pytest_sessionfinish(session, exitstatus):
             time.sleep(0.5)
             # Stop server
             realtime_server.stop()
-            print("\n[Real-time Dashboard] WebSocket server stopped")
+            print("[Real-time Dashboard] WebSocket server stopped")
     except Exception as e:
         # Don't fail tests if cleanup fails
         pass
