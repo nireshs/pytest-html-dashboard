@@ -47,7 +47,7 @@ pytest-enhanced-reporter/
 - ❌ ADB operations (Android device management)
 - ❌ Device-specific error patterns
 - ❌ Jenkins pipeline integrations
-- ❌ ProjectName/CompanyName branding hardcoded
+- ❌ Company branding was hardcoded (now removed)
 
 **Made Configurable**:
 - ✅ Company/project name
@@ -165,9 +165,9 @@ Then configure it for ProjectName-specific branding:
 ```yaml
 # config/pytest_enhanced_reporter.yaml
 branding:
-  company_name: "CompanyName"
+  company_name: "Your Company"
   report_title: "ProjectName Framework Test Report"
-  logo_url: "data:image/png;base64,iVBORw0KGgo..."  # CompanyName logo
+  logo_url: "data:image/png;base64,iVBORw0KGgo..."  # Company logo
   primary_color: "#004488"
   secondary_color: "#0066CC"
 

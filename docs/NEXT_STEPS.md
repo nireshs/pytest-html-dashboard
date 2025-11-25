@@ -229,7 +229,7 @@ def enhance_html_report(html_path, config, test_results, error_reporter):
 - Chart.js integration code
 - CSS styling (make it use config colors)
 - Table generation logic
-- Remove any ProjectName/CompanyName-specific references
+- Remove any proprietary company-specific references
 
 ### 3. Test Suite (`tests/`) - **IMPORTANT**
 
@@ -351,9 +351,9 @@ pip install pytest-enhanced-reporter
 ```yaml
 # config/pytest_enhanced_reporter.yaml
 branding:
-  company_name: "CompanyName"
+  company_name: "Your Company"
   report_title: "ProjectName Framework - Android STB Automation Test Report"
-  logo_url: "data:image/png;base64,iVBORw0..."  # Your CompanyName logo
+  logo_url: "data:image/png;base64,iVBORw0..."  # Your company logo
   primary_color: "#004488"
   secondary_color: "#0066CC"
   success_color: "#4CAF50"
@@ -394,7 +394,7 @@ pytest tests/test_unit_tests.py \
 
 - [ ] Complete `plugin.py` with all pytest hooks
 - [ ] Complete `html_generator.py` with HTML enhancement logic
-- [ ] Remove all ProjectName/CompanyName-specific code
+- [ ] Remove all proprietary company-specific code
 - [ ] Test configuration system (YAML, CLI, programmatic)
 - [ ] Test error classification with various error types
 - [ ] Create comprehensive test suite (>80% coverage)

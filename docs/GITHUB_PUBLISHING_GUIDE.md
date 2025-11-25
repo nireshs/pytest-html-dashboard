@@ -24,7 +24,7 @@
 
 ```powershell
 # Navigate to pytest-html-dashboard folder
-cd c:\SN\Repos\company\project-framework\pytest-html-dashboard
+cd c:\SN\Repos\pytest-dashboard
 
 # Initialize new Git repository
 git init
@@ -215,7 +215,7 @@ Share your plugin with the community:
 Before going public, verify:
 - [ ] All URLs updated with your GitHub username
 - [ ] Author name and email updated
-- [ ] No references to CompanyName/ProjectName in code files
+- [ ] No references to proprietary company information in code files
 - [ ] README.md is comprehensive
 - [ ] LICENSE file is correct (MIT)
 - [ ] Examples work correctly
